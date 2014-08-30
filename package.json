@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "co": "^3.1.0",
+    "co-pg": "^1.2.3",
     "koa": "^0.10.0",
     "koa-better-body": "^1.0.3",
     "koa-jade": "^0.2.1",
@@ -24,6 +25,7 @@
     "koa-trail": "0.0.2",
     "less-middleware": "^1.0.4",
     "neo-debug": "0.0.2",
+    "pg.js": "^3.4.2",
     "pg.mayflower": "^1.0.0",
     "thunkify": "^2.1.2"
   },
