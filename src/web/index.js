@@ -21,12 +21,22 @@ co(function * ()
 	var koaTrail = require('koa-trail');
 	var lessMiddleware = require('less-middleware');
 	var Path = require('path');
+	var PgMayflower = require('pg.mayflower');
 	var thunkify = require('thunkify');
 	
 	// setup controllers
 	var Controllers = {};
 	Controllers.Home = require('./controllers/HomeController');
 	
+	// run SQL migrations
+	var migrator = new PgMayflower({
+		directory: Path.resolve(__dirname, '../../migrations'),
+		connectionString: Config.sql.connectionString
+	});
+	console.log('Migrating Database...');
+	yield migrator.migrateAll();
+	
+	// run server initialization
 	yield setupServer(Config.web, false);
 
 	function setupMiddleware (app)

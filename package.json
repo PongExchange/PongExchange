@@ -24,6 +24,7 @@
     "koa-trail": "0.0.2",
     "less-middleware": "^1.0.4",
     "neo-debug": "0.0.2",
+    "pg.mayflower": "^1.0.0",
     "thunkify": "^2.1.2"
   },
   "engines": {
