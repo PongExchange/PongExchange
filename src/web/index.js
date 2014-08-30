@@ -23,7 +23,7 @@ co(function * ()
 	var Controllers = {};
 	Controllers.Home = require('./controllers/HomeController');
 	
-	yield setupServer();
+	yield setupServer(Config.web, false);
 
 	function setupMiddleware (app)
 	{
@@ -31,11 +31,11 @@ co(function * ()
 
 //	app.use(koaFavicon(Path.join(__dirname, 'static/favicon.ico')));
 
-		var cssDir = Path.resolve(__dirname, '../..', Config.settings.site.writablePath, 'css');
+		var cssDir = Path.resolve(__dirname, 'css');
 		var less = thunkify(lessMiddleware(__dirname + '/less', {
 			dest: cssDir,
 			compiler: {
-				compress: Config.tier === 'local'
+				compress: Config.tier !== 'local'
 			}
 		}));
 		app.use(koaMount('/static/css', function * (next)
@@ -55,9 +55,6 @@ co(function * ()
 			}
 		};
 
-		if (!Config.settings.markdown.highlightJs)
-			locals.css.highlight = false;
-
 		app.use(KoaJade.middleware({
 			viewPath: Path.join(__dirname, 'views'),
 			debug: isLocal,
@@ -66,24 +63,14 @@ co(function * ()
 			locals: locals
 		}));
 
-		app.use(Controllers.Auth.authMiddleware);
+//		app.use(Controllers.Auth.authMiddleware);
 		app.use(koaTrail(app));
 	}
 
 	function setupRoutes (app)
 	{
-		// --- Routes not requiring login ---
-
-		if (Config.tier === 'local')
-			app.get('/sandbox', Controllers.Home.sandboxGet);
-
 		app.post('*', koaBody());
 		app.get('/', Controllers.Home.indexGet);
-
-		// --- Contributor Routes ---
-
-		app.get('*', Controllers.Auth.filterLowerThan(Enums.UserTypes.CONTRIBUTOR, true));
-		app.get('/scribe', Controllers.Scribe.indexGet);
 	}
 
 	function * setupServer (options, ssl)
