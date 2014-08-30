@@ -27,6 +27,10 @@ co(function * ()
 	// setup controllers
 	var Controllers = {};
 	Controllers.Home = require('./controllers/HomeController');
+
+	/* -------------------------------------------------------------------
+	 * Initialization
+	 * ---------------------------------------------------------------- */
 	
 	// run SQL migrations
 	var migrator = new PgMayflower({
@@ -39,6 +43,10 @@ co(function * ()
 	// run server initialization
 	yield setupServer(Config.web, false);
 
+	/* -------------------------------------------------------------------
+	 * Helper Methods
+	 * ---------------------------------------------------------------- */
+
 	function setupMiddleware (app)
 	{
 		var isLocal = Config.tier === 'local';
@@ -46,7 +54,8 @@ co(function * ()
 //	app.use(koaFavicon(Path.join(__dirname, 'static/favicon.ico')));
 
 		var cssDir = Path.resolve(__dirname, 'css');
-		var less = thunkify(lessMiddleware(__dirname + '/less', {
+		// we don't have any less right now, but if we did, we'd put it in the src/web/static/less folder
+		var less = thunkify(lessMiddleware(__dirname + '/static/less', {
 			dest: cssDir,
 			compiler: {
 				compress: Config.tier !== 'local'
@@ -61,8 +70,18 @@ co(function * ()
 		app.use(koaMount('/static/css', koaStatic(cssDir)));
 		app.use(koaMount('/static', koaStatic(__dirname + '/static')));
 
+		var cssPrefix = '/static/css/';
+		var jsPrefix = '/static/js/';
 		var locals = {
-			title: 'Pong Exchange'
+			title: 'Pong Exchange',
+			css: {
+				bootstrap: cssPrefix + (isLocal ? 'bootstrap.css' : 'bootstrap.min.css'),
+				bootstrapTheme: cssPrefix + (isLocal ? 'bootstrap-theme.css' : 'bootstrap-theme.min.css')
+			},
+			js: {
+				jQuery: jsPrefix + (isLocal ? 'jquery-2.1.1.js' : 'jquery-2.1.1.min.js'),
+				bootstrap: jsPrefix + (isLocal ? 'bootstrap.js' : 'bootstrap.min.js')
+			}
 		};
 
 		app.use(KoaJade.middleware({
