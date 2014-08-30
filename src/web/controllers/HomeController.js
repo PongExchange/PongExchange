@@ -3,21 +3,21 @@
  * Require Statements << Keep in alphabetical order >>
  * ---------------------------------------------------------------- */
 
-var debug = require('neo-debug')('web.IndexController');
+var debug = require('neo-debug')('web.HomeController');
 
 /* =============================================================================
  * 
- * IndexController
+ * HomeController
  *  
  * ========================================================================== */
 
-var IndexController = module.exports;
+var HomeController = module.exports;
 
 /* -------------------------------------------------------------------
  * Http Methods << Keep in alphabetical order >>
  * ---------------------------------------------------------------- */
 
-IndexController.indexGET = function * ()
+HomeController.indexGET = function * ()
 {
 	debug('Index page');
 	yield this.render('home/index');
