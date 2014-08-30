@@ -1,0 +1,33 @@
+{
+  "name": "pongexchange",
+  "description": "A simple web app for tracking ping pong matches and tournaments.",
+  "version": "1.0.0",
+  "author": "Bret Copeland <bret@atlantisflight.org> (https://github.com/bretcope)",
+  "contributors": [
+    "Jarrod Dixon (https://github.com/dixon)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PongExchange/PongExchange.git"
+  },
+  "keywords": [
+    "ping-pong",
+    "table-tennis"
+  ],
+  "dependencies": {
+    "co": "^3.1.0",
+    "koa": "^0.10.0",
+    "koa-better-body": "^1.0.3",
+    "koa-jade": "^0.2.1",
+    "koa-mount": "^1.3.0",
+    "koa-static": "^1.4.6",
+    "koa-trail": "0.0.2",
+    "less-middleware": "^1.0.4",
+    "neo-debug": "0.0.2"
+  },
+  "engines": {
+    "node": ">=0.11.13"
+  },
+  "engineStrict": true,
+  "license": "MIT"
+}
