@@ -15,6 +15,7 @@ co(function * ()
 	var Https = require('https');
 	var koa = require('koa');
 	var koaBody = require('koa-better-body');
+	var koaFavicon = require('koa-favicon');
 	var KoaJade = require('koa-jade');
 	var koaMount = require('koa-mount');
 	var koaStatic = require('koa-static');
@@ -51,7 +52,7 @@ co(function * ()
 	{
 		var isLocal = Config.tier === 'local';
 
-//	app.use(koaFavicon(Path.join(__dirname, 'static/favicon.ico')));
+		app.use(koaFavicon(Path.join(__dirname, '/static/favicon.ico')));
 
 		var cssDir = Path.resolve(__dirname, '/static/css');
 		var less = thunkify(lessMiddleware(__dirname + '/static/less', {
