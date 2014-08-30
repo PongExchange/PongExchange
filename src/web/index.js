@@ -11,6 +11,8 @@ co(function * ()
 	 * Require Statements << Keep in alphabetical order >>
 	 * ---------------------------------------------------------------- */
 	
+	var Http = require('http');
+	var Https = require('https');
 	var koa = require('koa');
 	var koaBody = require('koa-better-body');
 	var KoaJade = require('koa-jade');
@@ -18,6 +20,8 @@ co(function * ()
 	var koaStatic = require('koa-static');
 	var koaTrail = require('koa-trail');
 	var lessMiddleware = require('less-middleware');
+	var Path = require('path');
+	var thunkify = require('thunkify');
 	
 	// setup controllers
 	var Controllers = {};
@@ -48,11 +52,7 @@ co(function * ()
 		app.use(koaMount('/static', koaStatic(__dirname + '/static')));
 
 		var locals = {
-			title: Config.settings.site.name,
-			css: {
-				common: Kirja.url('/static/css/common.css'),
-				highlight: Kirja.url(Config.settings.theme.codeCss)
-			}
+			title: 'Pong Exchange'
 		};
 
 		app.use(KoaJade.middleware({
@@ -70,7 +70,7 @@ co(function * ()
 	function setupRoutes (app)
 	{
 		app.post('*', koaBody());
-		app.get('/', Controllers.Home.indexGet);
+		app.get('/', Controllers.Home.indexGET);
 	}
 
 	function * setupServer (options, ssl)
