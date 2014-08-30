@@ -53,8 +53,7 @@ co(function * ()
 
 //	app.use(koaFavicon(Path.join(__dirname, 'static/favicon.ico')));
 
-		var cssDir = Path.resolve(__dirname, 'css');
-		// we don't have any less right now, but if we did, we'd put it in the src/web/static/less folder
+		var cssDir = Path.resolve(__dirname, '/static/css');
 		var less = thunkify(lessMiddleware(__dirname + '/static/less', {
 			dest: cssDir,
 			compiler: {
@@ -75,8 +74,9 @@ co(function * ()
 		var locals = {
 			title: 'Pong Exchange',
 			css: {
-				bootstrap: cssPrefix + (isLocal ? 'bootstrap.css' : 'bootstrap.min.css'),
-				bootstrapTheme: cssPrefix + (isLocal ? 'bootstrap-theme.css' : 'bootstrap-theme.min.css')
+//				bootstrap: cssPrefix + (isLocal ? 'bootstrap.css' : 'bootstrap.min.css'),
+//				bootstrapTheme: cssPrefix + (isLocal ? 'bootstrap-theme.css' : 'bootstrap-theme.min.css')
+				main: cssPrefix + 'main.css'
 			},
 			js: {
 				jQuery: jsPrefix + (isLocal ? 'jquery-2.1.1.js' : 'jquery-2.1.1.min.js'),
