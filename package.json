@@ -30,6 +30,9 @@
     "pg.mayflower": "^1.0.0",
     "thunkify": "^2.1.2"
   },
+  "scripts": {
+    "start": "node --harmony src/web"
+  },
   "engines": {
     "node": ">=0.11.13"
   },
