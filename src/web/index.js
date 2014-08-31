@@ -28,6 +28,7 @@ co(function * ()
 	// setup controllers
 	var Controllers = {};
 	Controllers.Home = require('./controllers/HomeController');
+	Controllers.Leaderboard = require('./controllers/LeaderboardController');
 
 	/* -------------------------------------------------------------------
 	 * Initialization
@@ -99,6 +100,9 @@ co(function * ()
 	{
 		app.post('*', koaBody());
 		app.get('/', Controllers.Home.indexGET);
+
+		app.get('/leaderboard', Controllers.Leaderboard.indexGET);
+		app.get('/leaderboard/overall', Controllers.Leaderboard.overallGET);
 	}
 
 	function * setupServer (options, ssl)
