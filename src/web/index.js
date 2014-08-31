@@ -52,10 +52,10 @@ co(function * ()
 	{
 		var isLocal = Config.tier === 'local';
 
-		app.use(koaFavicon(Path.join(__dirname, '/static/favicon.ico')));
+		app.use(koaFavicon(Path.join(__dirname, 'static/favicon.ico')));
 
-		var cssDir = Path.resolve(__dirname, '/static/css');
-		var less = thunkify(lessMiddleware(__dirname + '/static/less', {
+		var cssDir = Path.join(__dirname, 'static/css');
+		var less = thunkify(lessMiddleware(Path.join(__dirname, 'static/less'), {
 			dest: cssDir,
 			compiler: {
 				compress: Config.tier !== 'local'
@@ -68,15 +68,13 @@ co(function * ()
 		}));
 
 		app.use(koaMount('/static/css', koaStatic(cssDir)));
-		app.use(koaMount('/static', koaStatic(__dirname + '/static')));
+		app.use(koaMount('/static', koaStatic(Path.join(__dirname, 'static'))));
 
 		var cssPrefix = '/static/css/';
 		var jsPrefix = '/static/js/';
 		var locals = {
 			title: 'Pong Exchange',
 			css: {
-//				bootstrap: cssPrefix + (isLocal ? 'bootstrap.css' : 'bootstrap.min.css'),
-//				bootstrapTheme: cssPrefix + (isLocal ? 'bootstrap-theme.css' : 'bootstrap-theme.min.css')
 				main: cssPrefix + 'main.css'
 			},
 			js: {
