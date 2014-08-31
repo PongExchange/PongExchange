@@ -1,14 +1,12 @@
 extends ../layout
 
+
 block Content
   h2 Record a new game.
   form(method='post' action='create')
-    input(type='text', name='player1[name]' placeholder='player 1')
-    input(type='text', name='player2[name]' placeholder='player 2')
-    input(type="radio", name='game_types[id]', value='1') 
+    input(type="radio", name='game_types[id]', id='singles', value='1' checked) 
     | Singles
-    input(type="radio", name='game_types[id]', value='2') 
+    input(type="radio", name='game_types[id]', id='doubles', value='2') 
     | Doubles
-    input(type='text', name='player1[score]' placeholder="player 1's score")
-    input(type='text', name='player2[score]' placeholder="player 2's score")
-    input(type='submit' class='btn')
+    div.input-form
+    
