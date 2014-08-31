@@ -29,6 +29,7 @@ co(function * ()
 	var Controllers = {};
 	Controllers.Home = require('./controllers/HomeController');
 	Controllers.Games = require('./controllers/GamesController');
+	Controllers.Leaderboard = require('./controllers/LeaderboardController');
 
 	/* -------------------------------------------------------------------
 	 * Initialization
@@ -101,9 +102,16 @@ co(function * ()
 		app.post('*', koaBody());
 		app.get('/', Controllers.Home.indexGET);
 		app.post('/', Controllers.Home.indexPOST);
+		
 		app.get('/example/:something', Controllers.Home.exampleGET);
+<<<<<<< HEAD
 		app.get('/games/new', Controllers.Games.newGET);
 		app.post('/games/create', Controllers.Games.createPOST);
+=======
+
+		app.get('/leaderboard', Controllers.Leaderboard.indexGET);
+		app.get('/leaderboard/overall', Controllers.Leaderboard.overallGET);
+>>>>>>> 16e2e9cd8eea36f8872ef20be90c4733f695e837
 	}
 
 	function * setupServer (options, ssl)

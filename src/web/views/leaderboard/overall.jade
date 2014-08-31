@@ -1,0 +1,16 @@
+extends ../layout
+
+block Header
+    h1 Overall Leaderboards
+
+block Content
+    table
+        tr
+            td 
+                b Player
+            td 
+                b Rating
+        each item in ratings
+            tr
+                td #{item.player_name}
+                td #{item.player_rating}
