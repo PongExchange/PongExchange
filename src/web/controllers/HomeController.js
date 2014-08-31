@@ -22,3 +22,16 @@ HomeController.indexGET = function * ()
 	debug('Index page');
 	yield this.render('home/index');
 };
+
+HomeController.indexPOST = function * ()
+{
+	console.log(this.request.query);
+	console.log(this.request.body.fields.test);
+	this.body = this.request.body.fields.test;
+};
+
+HomeController.exampleGET = function * ()
+{
+	console.log(this.params);
+	this.body = JSON.stringify(this.params);
+};

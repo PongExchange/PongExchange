@@ -100,6 +100,9 @@ co(function * ()
 	{
 		app.post('*', koaBody());
 		app.get('/', Controllers.Home.indexGET);
+		app.post('/', Controllers.Home.indexPOST);
+		
+		app.get('/example/:something', Controllers.Home.exampleGET);
 
 		app.get('/leaderboard', Controllers.Leaderboard.indexGET);
 		app.get('/leaderboard/overall', Controllers.Leaderboard.overallGET);
