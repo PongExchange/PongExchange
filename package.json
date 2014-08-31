@@ -34,7 +34,7 @@
     "start": "node --harmony src/web"
   },
   "engines": {
-    "node": ">=0.11.13"
+    "node": "~0.11.13"
   },
   "engineStrict": true,
   "license": "MIT"
