@@ -27,7 +27,8 @@
     "neo-debug": "0.0.2",
     "pg.js": "^3.4.2",
     "pg.mayflower": "^1.0.0",
-    "thunkify": "^2.1.2"
+    "thunkify": "^2.1.2",
+    "glicko2": "^0.7.4"
   },
   "engines": {
     "node": ">=0.11.13"
