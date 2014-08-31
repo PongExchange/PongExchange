@@ -22,3 +22,8 @@ HomeController.indexGET = function * ()
 	debug('Index page');
 	yield this.render('home/index');
 };
+
+HomeController.indexPOST = function * ()
+{
+	console.log(this.request.body.fields.test);
+};

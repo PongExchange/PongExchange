@@ -99,6 +99,7 @@ co(function * ()
 	{
 		app.post('*', koaBody());
 		app.get('/', Controllers.Home.indexGET);
+		app.post('/', Controllers.Home.indexPOST);
 	}
 
 	function * setupServer (options, ssl)
