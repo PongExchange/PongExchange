@@ -100,6 +100,7 @@ co(function * ()
 		app.post('*', koaBody());
 		app.get('/', Controllers.Home.indexGET);
 		app.post('/', Controllers.Home.indexPOST);
+		app.get('/example/:something', Controllers.Home.exampleGET);
 	}
 
 	function * setupServer (options, ssl)
