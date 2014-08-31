@@ -28,6 +28,7 @@ co(function * ()
 	// setup controllers
 	var Controllers = {};
 	Controllers.Home = require('./controllers/HomeController');
+	Controllers.Games = require('./controllers/GamesController');
 
 	/* -------------------------------------------------------------------
 	 * Initialization
@@ -101,6 +102,8 @@ co(function * ()
 		app.get('/', Controllers.Home.indexGET);
 		app.post('/', Controllers.Home.indexPOST);
 		app.get('/example/:something', Controllers.Home.exampleGET);
+		app.get('/games/new', Controllers.Games.newGET);
+		app.post('/games/create', Controllers.Games.createPOST);
 	}
 
 	function * setupServer (options, ssl)
