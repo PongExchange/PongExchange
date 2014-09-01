@@ -2,36 +2,37 @@ extends ../layout
 
 
 block Content
-  h2 Record a new game.
-  form(method='post' action='create')
-    input(type="radio", name='game_types[id]', id='singles', value='1' checked) 
-    | Singles
-    input(type="radio", name='game_types[id]', id='doubles', value='2') 
-    | Doubles
-    br
+    h2 Record a new game.
+    form(method='post' action='create')
+        input(type="radio", name='game_types[id]', id='singles', value='1' checked) 
+        | Singles
+        input(type="radio", name='game_types[id]', id='doubles', value='2') 
+        | Doubles
+        
+        br
 
-    select(data-placeholder="Add player(s) on team 1",multiple class="chosen-select", style="width:300px;", tabindex="1")
-      option(value="Add players")
-      option(value="Kevin") Kevin
-      option(value="Bret") Bret
-      option(value="Joe") Joe
-      option(value="Jarrod") Jarrod
-      option(value="Tom") Tom
+        select(data-placeholder="Add player(s) on team 1",multiple class="chosen-select", style="width:300px;", tabindex="1")
+            option(value="Add players")
+            option(value="Kevin") Kevin
+            option(value="Bret") Bret
+            option(value="Joe") Joe
+            option(value="Jarrod") Jarrod
+            option(value="Tom") Tom
 
-    input(type='text', name='team1[score]', placeholder='team 1 score')
-    
-    br
+        input(type='text', name='team1[score]', placeholder='team 1 score')
+        
+        br
 
-    select(data-placeholder="Add player(s) on team 2",multiple class="chosen-select", style="width:300px;", tabindex="1")
-      option(value="Add players")
-      option(value="Kevin") Kevin
-      option(value="Bret") Bret
-      option(value="Joe") Joe
-      option(value="Jarrod") Jarrod
-      option(value="Tom") Tom
-    
-    input(type='text', name='team2[score]', placeholder='team 2 score')
-    
-    br
-    
-    input(type='submit', class='btn')
+        select(data-placeholder="Add player(s) on team 2",multiple class="chosen-select", style="width:300px;", tabindex="1")
+            option(value="Add players")
+            option(value="Kevin") Kevin
+            option(value="Bret") Bret
+            option(value="Joe") Joe
+            option(value="Jarrod") Jarrod
+            option(value="Tom") Tom
+        
+        input(type='text', name='team2[score]', placeholder='team 2 score')
+        
+        br
+        
+        input(type='submit', class='btn')
