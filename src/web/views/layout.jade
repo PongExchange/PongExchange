@@ -4,16 +4,16 @@ html
 		title= title
 		link(rel='shortcut icon', href='/favicon.ico')
 		block Css
-			link(type='text/css', rel='stylesheet', href=css.main)
+			link(type='text/css', rel='stylesheet', href=less.main)
 		block Js
-			script(src=js.jQuery)
+			script(src=js.jquery)
 			script(src=js.bootstrap)
 
 	body
 		.navbar.navbar-default(role='navigation')
 			.container
 				.navbar-header
-					a.navbar-brand.navbar-logo(href='/') #[img(src=images.navLogo)]
+					a.navbar-brand.navbar-logo(href='/') #[img(src=images.NavLogo)]
 				ul.nav.navbar-nav
 					li #[a(href='') Players]
 					li #[a(href='') Games]

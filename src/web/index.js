@@ -11,6 +11,7 @@ co(function * ()
 	 * Require Statements << Keep in alphabetical order >>
 	 * ---------------------------------------------------------------- */
 
+	var Fs = require('fs');
 	var Http = require('http');
 	var Https = require('https');
 	var koa = require('koa');
@@ -55,7 +56,7 @@ co(function * ()
 	 * Helper Methods
 	 * ---------------------------------------------------------------- */
 
-	function setupMiddleware (app)
+	function * setupMiddleware (app)
 	{
 		var isLocal = Config.tier === 'local';
 		
@@ -76,51 +77,29 @@ co(function * ()
 
 		app.use(koaFavicon(Path.join(__dirname, 'static/favicon.ico')));
 
-		var cssPath = '/static/css'; // for third party css
-		var lessPath = '/static/less';
-		var compiledLessPath = '/static/css-less';
-		var jsPath = '/static/js';
-		var imagesPath = '/static/images';
-
-		var compiledLessDirectory = Path.join(__dirname, compiledLessPath);
-		var less = thunkify(lessMiddleware(Path.join(__dirname, lessPath), {
+		var compiledLessDirectory = Path.join(__dirname, Config.web.static.compiledLessPath);
+		var less = thunkify(lessMiddleware(Path.join(__dirname, Config.web.static.lessPath), {
 			dest: compiledLessDirectory,
 			compiler: {
 				compress: Config.tier !== 'local'
 			}
 		}));
-		app.use(koaMount(compiledLessPath, function * (next)
+		app.use(koaMount(Config.web.static.compiledLessPath, function * (next)
 		{
 			yield less(this.req, this.res);
 			yield next;
 		}));
 
-		app.use(koaMount(compiledLessPath, koaStatic(compiledLessDirectory)));
+//		app.use(koaMount(Config.web.static.compiledLessPath, koaStatic(compiledLessDirectory)));
 		app.use(koaMount('/static', koaStatic(Path.join(__dirname, 'static'))));
-
-		var locals = {
-			title: 'Pong Exchange',
-			css: {
-				main: compiledLessPath + '/main.css',
-				chosen: cssPath + '/' + (isLocal ? 'chosen.css' : 'chosen.min.css')
-			},
-			js: {
-				jQuery: jsPath + '/' + (isLocal ? 'jquery-2.1.1.js' : 'jquery-2.1.1.min.js'),
-				chosen: jsPath + '/' + (isLocal ? 'chosen.jquery.js' : 'chosen.jquery.min.js'),
-				bootstrap: jsPath + '/' + (isLocal ? 'bootstrap.js' : 'bootstrap.min.js'),
-				games: jsPath + '/games.js'
-			},
-			images: {
-				navLogo: imagesPath + '/NavLogo.png'
-			}
-		};
-
+		
+		var jadeGlobals = yield getJadeGlobals();
 		app.use(KoaJade.middleware({
 			viewPath: Path.join(__dirname, 'views'),
 			debug: isLocal,
 			pretty: isLocal,
 			compileDebug: isLocal,
-			locals: locals
+			locals: jadeGlobals
 		}));
 		
 		app.use(Middleware.jadeContextVariables);
@@ -135,7 +114,7 @@ co(function * ()
 		app.use(koaTrail(app));
 	}
 
-	function setupRoutes (app)
+	function * setupRoutes (app)
 	{
 		app.post('*', koaBody());
 		app.get('/', Controllers.Home.indexGET);
@@ -145,7 +124,7 @@ co(function * ()
 		app.get('/auth/google', koaPassport.authenticate('google'));
 		app.get('/auth/google/callback', 
 			koaPassport.authenticate('google', { // TODO: this needs to have a returnUrl on the query
-				successRedirect: '/', 			
+				successRedirect: '/',
 				failureRedirect: '/auth/login'
 			})
 		);
@@ -171,8 +150,8 @@ co(function * ()
 	{
 		var app = koa();
 
-		setupMiddleware(app, options);
-		setupRoutes(app);
+		yield setupMiddleware(app, options);
+		yield setupRoutes(app);
 
 		var handler = app.callback();
 		var server;
@@ -200,6 +179,99 @@ co(function * ()
 		{
 			this.redirect('/auth/login');
 		}
+	}
+	
+	function * getJadeGlobals ()
+	{
+		var isLocal = Config.tier === 'local';
+		var globals = {
+			title: 'Pong Exchange',
+			css: {
+				main: Config.web.static.compiledLessPath + '/main.css',
+				chosen: Config.web.static.cssPath + '/' + (isLocal ? 'chosen.css' : 'chosen.min.css')
+			},
+			js: {
+				jQuery: Config.web.static.jsPath + '/' + (isLocal ? 'jquery-2.1.1.js' : 'jquery-2.1.1.min.js'),
+				chosen: Config.web.static.jsPath + '/' + (isLocal ? 'chosen.jquery.js' : 'chosen.jquery.min.js'),
+				bootstrap: Config.web.static.jsPath + '/' + (isLocal ? 'bootstrap.js' : 'bootstrap.min.js'),
+				games: Config.web.static.jsPath + '/games.js'
+			},
+			images: {
+				navLogo: Config.web.static.imagesPath + '/NavLogo.png'
+			}
+		};
+		
+		globals.title = 'Pong Exchange';
+		
+		// --- load static resources dynamically ---
+		
+		// css
+		globals.css = yield getStaticResourceMap(Config.web.static.cssPath); // third party css
+		
+		// less
+		globals.less = yield getStaticResourceMap(Config.web.static.compiledLessPath, Path.join(__dirname, Config.web.static.lessPath));
+		
+		// js
+		globals.js = yield getStaticResourceMap(Config.web.static.jsPath);
+		globals.js.jquery = globals.js.jquery_2_1_1;
+		
+		// images
+		globals.images = yield getStaticResourceMap(Config.web.static.imagesPath);
+		
+		return globals;
+	}
+	
+	function * getStaticResourceMap (path, dir)
+	{
+		var res = {};
+		if (!dir)
+			dir = Path.join(__dirname, path);
+		
+		var files = yield Fs.readdir.bind(Fs, dir);
+		files.sort();
+		
+		var minSuffix = /_min$/;
+		var fsStat = thunkify(Fs.stat);
+		var stats, f, fPath, fSafe;
+		for (var i = 0; i < files.length; i++)
+		{
+			f = files[i];
+			if (f[0] === '.')
+				continue; // skip files/directories which begin with "."
+				
+			fPath = path + '/' + f;
+			fSafe = safeName(f);
+			stats = yield fsStat(Path.join(dir, f));
+			if (stats.isDirectory())
+			{
+				res[fSafe] = yield getStaticResourceMap(fPath, Path.join(dir, f));
+			}
+			else
+			{
+				if (minSuffix.test(fSafe))
+				{
+					fSafe = fSafe.replace(minSuffix, '');
+					
+					// don't use minified versions on local if a uncompressed version already exists
+					if (Config.tier === 'local' && res[fSafe])
+						continue;
+					
+				}
+				
+				res[fSafe] = fPath;
+			}
+		}
+		
+		return res;
+	}
+
+	function safeName (name)
+	{
+		// trim off the extension and convert non-word chars to underscores
+		return name.replace(/\.[^.]+$/, function () { return ''; }).replace(/(\W+)(\w)?/g, function (match, nonWord, word)
+		{
+			return word ? '_' + word : '';
+		});
 	}
 
 })();
