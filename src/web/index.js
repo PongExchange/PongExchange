@@ -149,6 +149,9 @@ co(function * ()
 				failureRedirect: '/auth/login'
 			})
 		);
+		app.get('/auth/logout', Controllers.Auth.logoutGET);
+		app.post('/auth/logout', Controllers.Auth.logoutPOST);
+		
 		app.get('/example/:something', Controllers.Home.exampleGET);
 
 		// gotta be logged in to add new games
