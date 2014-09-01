@@ -104,7 +104,7 @@ co(function * ()
 				jQuery: jsPath + '/' + (isLocal ? 'jquery-2.1.1.js' : 'jquery-2.1.1.min.js'),
 				chosen: jsPath + '/' + (isLocal ? 'chosen.jquery.js' : 'chosen.jquery.min.js'),
 				bootstrap: jsPath + '/' + (isLocal ? 'bootstrap.js' : 'bootstrap.min.js'),
-				games: jsPath + '/' + '/games.js'
+				games: jsPath + '/games.js'
 			},
 			images: {
 				navLogo: imagesPath + '/NavLogo.png'
