@@ -5,12 +5,12 @@ html
 		link(rel='shortcut icon', href='/favicon.ico')
 		block Css
 			link(type='text/css', rel='stylesheet', href=css.main)
-			link(type='text/css', rel='stylesheet', href='/static/css/chosen.css')
+			link(type='text/css', rel='stylesheet', href=css.chosen)
 		block Js
 			script(src=js.jQuery)
-			script(src='/static/js/chosen.jquery.js')
+			script(src=js.chosen)
 			script(src=js.bootstrap)
-			script(src='/static/js/games.js')
+			script(src=js.games)
 	body
 		.navbar.navbar-default(role='navigation')
 			.container

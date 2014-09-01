@@ -82,11 +82,14 @@ co(function * ()
 		var locals = {
 			title: 'Pong Exchange',
 			css: {
-				main: compiledLessPath + '/main.css'
+				main: compiledLessPath + '/main.css',
+				chosen: cssPath + '/' + (isLocal ? 'chosen.css' : 'chosen.min.css')
 			},
 			js: {
 				jQuery: jsPath + '/' + (isLocal ? 'jquery-2.1.1.js' : 'jquery-2.1.1.min.js'),
-				bootstrap: jsPath + '/' + (isLocal ? 'bootstrap.js' : 'bootstrap.min.js')
+				chosen: jsPath + '/' + (isLocal ? 'chosen.jquery.js' : 'chosen.jquery.min.js'),
+				bootstrap: jsPath + '/' + (isLocal ? 'bootstrap.js' : 'bootstrap.min.js'),
+				games: jsPath + '/' + '/games.js'
 			},
 			images: {
 				navLogo: imagesPath + '/NavLogo.png'
