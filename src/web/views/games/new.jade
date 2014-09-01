@@ -8,5 +8,25 @@ block Content
     | Singles
     input(type="radio", name='game_types[id]', id='doubles', value='2') 
     | Doubles
-    div.input-form
+    br
+
+
+    select(data-placeholder="Add player(s) on team 1",multiple class="chosen-select", style="width:300px;", tabindex="1")
+      option(value="Add players")
+      option(value="Kevin") Kevin
+      option(value="Bret") Bret
+
+    input(type='text', name='player1[score]', placeholder='player 1 score')
     
+    br
+
+    select(data-placeholder="Add player(s) on team 2",multiple class="chosen-select", style="width:300px;", tabindex="1")
+      option(value="Add players")
+      option(value="Kevin") Kevin
+      option(value="Bret") Bret
+    
+    input(type='text', name='player2[score]', placeholder='player 2 score')
+    
+    br
+    
+    input(type='submit', class='btn')

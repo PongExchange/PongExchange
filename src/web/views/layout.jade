@@ -5,8 +5,10 @@ html
 		link(rel='shortcut icon', href='/favicon.ico')
 		block Css
 			link(type='text/css', rel='stylesheet', href=css.main)
+			link(type='text/css', rel='stylesheet', href='/static/css/chosen.css')
 		block Js
 			script(src=js.jQuery)
+			script(src='/static/js/chosen.jquery.js')
 			script(src=js.bootstrap)
 			script(src='/static/js/games.js')
 	body
