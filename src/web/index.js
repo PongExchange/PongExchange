@@ -6,11 +6,11 @@ co(function * ()
 {
 	var Config = require('Config');
 	yield Config.initialize();
-	
+
 	/* -------------------------------------------------------------------
 	 * Require Statements << Keep in alphabetical order >>
 	 * ---------------------------------------------------------------- */
-	
+
 	var Http = require('http');
 	var Https = require('https');
 	var koa = require('koa');
@@ -24,7 +24,7 @@ co(function * ()
 	var Path = require('path');
 	var PgMayflower = require('pg.mayflower');
 	var thunkify = require('thunkify');
-	
+
 	// setup controllers
 	var Controllers = {};
 	Controllers.Home = require('./controllers/HomeController');
@@ -34,7 +34,7 @@ co(function * ()
 	/* -------------------------------------------------------------------
 	 * Initialization
 	 * ---------------------------------------------------------------- */
-	
+
 	// run SQL migrations
 	var migrator = new PgMayflower({
 		directory: Path.resolve(__dirname, '../../migrations'),
@@ -42,7 +42,7 @@ co(function * ()
 	});
 	console.log('Migrating Database...');
 	yield migrator.migrateAll();
-	
+
 	// run server initialization
 	yield setupServer(Config.web, false);
 
@@ -55,7 +55,7 @@ co(function * ()
 		var isLocal = Config.tier === 'local';
 
 		app.use(koaFavicon(Path.join(__dirname, 'static/favicon.ico')));
-		
+
 		var cssPath = '/static/css'; // for third party css
 		var lessPath = '/static/less';
 		var compiledLessPath = '/static/css-less';
@@ -114,6 +114,8 @@ co(function * ()
 		app.get('/games/new', Controllers.Games.newGET);
 		app.post('/games/create', Controllers.Games.createPOST);
 
+		app.get('/recentgames', Controllers.RecentGames.indexGET);
+
 		app.get('/leaderboard', Controllers.Leaderboard.indexGET);
 		app.get('/leaderboard/overall', Controllers.Leaderboard.overallGET);
 	}
@@ -140,5 +142,5 @@ co(function * ()
 		console.log((ssl ? 'Https' : 'Http') + ' server listening on ' + options.host + ':' + options.port);
 		return server;
 	}
-	
+
 })();
