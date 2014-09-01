@@ -2,5 +2,5 @@
 /scratch
 /node_modules
 /config.json
-/src/web/static/css
+/src/web/static/css-less
 npm-debug.log
