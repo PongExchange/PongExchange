@@ -30,6 +30,7 @@ co(function * ()
 	Controllers.Home = require('./controllers/HomeController');
 	Controllers.Games = require('./controllers/GamesController');
 	Controllers.Leaderboard = require('./controllers/LeaderboardController');
+	Controllers.RecentGames = require('./controllers/RecentGamesController');
 
 	/* -------------------------------------------------------------------
 	 * Initialization
