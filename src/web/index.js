@@ -18,6 +18,8 @@ co(function * ()
 	var koaFavicon = require('koa-favicon');
 	var KoaJade = require('koa-jade');
 	var koaMount = require('koa-mount');
+	var koaPassport = require('koa-passport');
+	var koaSession = require('koa-session');
 	var koaStatic = require('koa-static');
 	var koaTrail = require('koa-trail');
 	var lessMiddleware = require('less-middleware');
@@ -27,6 +29,7 @@ co(function * ()
 
 	// setup controllers
 	var Controllers = {};
+	Controllers.Auth = require('./controllers/AuthController');
 	Controllers.Home = require('./controllers/HomeController');
 	Controllers.Games = require('./controllers/GamesController');
 	Controllers.Leaderboard = require('./controllers/LeaderboardController');
@@ -43,9 +46,9 @@ co(function * ()
 	});
 	console.log('Migrating Database...');
 	yield migrator.migrateAll();
-
+	
 	// run server initialization
-	yield setupServer(Config.web, false);
+	yield setupServer(Config.web);
 
 	/* -------------------------------------------------------------------
 	 * Helper Methods
@@ -54,6 +57,18 @@ co(function * ()
 	function setupMiddleware (app)
 	{
 		var isLocal = Config.tier === 'local';
+		
+		if (isLocal)
+		{
+			// logger
+			app.use(function *(next)
+			{
+				var start = new Date;
+				yield next;
+				var ms = new Date - start;
+				console.log('%s %s - %s', this.method, this.url, ms);
+			});
+		}
 
 		app.use(koaFavicon(Path.join(__dirname, 'static/favicon.ico')));
 
@@ -104,7 +119,13 @@ co(function * ()
 			locals: locals
 		}));
 
-//		app.use(Controllers.Auth.authMiddleware);
+		// setup sessions and auth
+		require('Auth');
+		app.keys = ["it's a secret to everybody"];
+		app.use(koaSession());
+		app.use(koaPassport.initialize());
+		app.use(koaPassport.session());
+		
 		app.use(koaTrail(app));
 	}
 
@@ -113,8 +134,21 @@ co(function * ()
 		app.post('*', koaBody());
 		app.get('/', Controllers.Home.indexGET);
 		app.post('/', Controllers.Home.indexPOST);
+		
+		app.get('/auth/login', Controllers.Auth.loginGET);
+		app.get('/auth/google', koaPassport.authenticate('google'));
+		app.get('/auth/google/callback', 
+			koaPassport.authenticate('google', { // TODO: this needs to have a returnUrl on the query
+				successRedirect: '/', 			
+				failureRedirect: '/auth/login'
+			})
+		);
 		app.get('/example/:something', Controllers.Home.exampleGET);
 
+		// gotta be logged in to add new games
+		app.all('/games/*', authenticate);
+		
+		// TODO: make create point to new and alter the above to be .all('/games/new')
 		app.get('/games/new', Controllers.Games.newGET);
 		app.post('/games/create', Controllers.Games.createPOST);
 
@@ -123,28 +157,40 @@ co(function * ()
 		app.get('/leaderboard', Controllers.Leaderboard.indexGET);
 		app.get('/leaderboard/overall', Controllers.Leaderboard.overallGET);
 	}
-
-	function * setupServer (options, ssl)
+	
+	function * setupServer (options)
 	{
 		var app = koa();
 
-		setupMiddleware(app);
+		setupMiddleware(app, options);
 		setupRoutes(app);
 
 		var handler = app.callback();
 		var server;
 
-		if (ssl)
+		if (options.ssl)
 			server = Https.createServer(options.ssl, handler);
 		else
 			server = Http.createServer(handler);
 
 		server.app = app;
-
+		
 		server.listen_ = thunkify(server.listen);
 		yield server.listen_(options.port, options.host);
-		console.log((ssl ? 'Https' : 'Http') + ' server listening on ' + options.host + ':' + options.port);
+		console.log('server listening on ' + options.getAbsoluteUri());
 		return server;
+	}
+
+	function* authenticate (next)
+	{
+		if (this.isAuthenticated())
+		{
+			yield next;
+		}
+		else
+		{
+			this.redirect('/auth/login');
+		}
 	}
 
 })();
