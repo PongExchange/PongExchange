@@ -66,8 +66,11 @@ co(function * ()
 			{
 				var start = new Date;
 				yield next;
-				var ms = new Date - start;
-				console.log('%s %s - %s', this.method, this.url, ms);
+				if (this.url.indexOf('/static/') < 0) // TODO: we need to cache static resources
+				{
+					var ms = new Date - start;
+					console.log('%s %s - %s', this.method, this.url, ms);
+				}
 			});
 		}
 
