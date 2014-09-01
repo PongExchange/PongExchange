@@ -23,6 +23,7 @@ co(function * ()
 	var koaStatic = require('koa-static');
 	var koaTrail = require('koa-trail');
 	var lessMiddleware = require('less-middleware');
+	var Middleware = require('Middleware');
 	var Path = require('path');
 	var PgMayflower = require('pg.mayflower');
 	var thunkify = require('thunkify');
@@ -119,23 +120,7 @@ co(function * ()
 			locals: locals
 		}));
 		
-		app.use(function * (next)
-		{
-			this._render = this.render;
-			var _this = this;
-			this.render = function * (template, locals, force)
-			{
-				if (!locals)
-					locals = {};
-				
-				if (!locals.user)
-					locals.user = _this.req.user;
-				
-				yield _this._render(template, locals, force);
-			};
-			
-			yield next;
-		});
+		app.use(Middleware.jadeContextVariables);
 
 		// setup sessions and auth
 		require('Auth');
