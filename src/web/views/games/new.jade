@@ -10,13 +10,15 @@ block Content
     | Doubles
     br
 
-
     select(data-placeholder="Add player(s) on team 1",multiple class="chosen-select", style="width:300px;", tabindex="1")
       option(value="Add players")
       option(value="Kevin") Kevin
       option(value="Bret") Bret
+      option(value="Joe") Joe
+      option(value="Jarrod") Jarrod
+      option(value="Tom") Tom
 
-    input(type='text', name='player1[score]', placeholder='player 1 score')
+    input(type='text', name='team1[score]', placeholder='team 1 score')
     
     br
 
@@ -24,8 +26,11 @@ block Content
       option(value="Add players")
       option(value="Kevin") Kevin
       option(value="Bret") Bret
+      option(value="Joe") Joe
+      option(value="Jarrod") Jarrod
+      option(value="Tom") Tom
     
-    input(type='text', name='player2[score]', placeholder='player 2 score')
+    input(type='text', name='team2[score]', placeholder='team 2 score')
     
     br
     
