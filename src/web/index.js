@@ -23,6 +23,7 @@ co(function * ()
 	var koaStatic = require('koa-static');
 	var koaTrail = require('koa-trail');
 	var lessMiddleware = require('less-middleware');
+	var Middleware = require('Middleware');
 	var Path = require('path');
 	var PgMayflower = require('pg.mayflower');
 	var thunkify = require('thunkify');
@@ -118,6 +119,8 @@ co(function * ()
 			compileDebug: isLocal,
 			locals: locals
 		}));
+		
+		app.use(Middleware.jadeContextVariables);
 
 		// setup sessions and auth
 		require('Auth');
