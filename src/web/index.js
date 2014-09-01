@@ -118,6 +118,24 @@ co(function * ()
 			compileDebug: isLocal,
 			locals: locals
 		}));
+		
+		app.use(function * (next)
+		{
+			this._render = this.render;
+			var _this = this;
+			this.render = function * (template, locals, force)
+			{
+				if (!locals)
+					locals = {};
+				
+				if (!locals.user)
+					locals.user = _this.req.user;
+				
+				yield _this._render(template, locals, force);
+			};
+			
+			yield next;
+		});
 
 		// setup sessions and auth
 		require('Auth');
