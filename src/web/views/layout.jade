@@ -12,9 +12,21 @@ html
 			script(src=js.bootstrap)
 			script(src='/static/js/games.js')
 	body
-		.page
-			.header
-				block Header
+		.navbar.navbar-default(role='navigation')
+			.container
+				.navbar-header
+					a.navbar-brand.navbar-logo(href='/') #[img(src=images.navLogo)]
+				ul.nav.navbar-nav
+					li #[a(href='') Players]
+					li #[a(href='') Games]
+					li #[a(href='') Tournaments]
+					li #[a(href='') Rules]
+				.navbar-form.navbar-left
+					a.btn.btn-primary(href='/games/new') Record Game
+				ul.nav.navbar-nav.navbar-right
+					li #[a(href='') Sign Up / Login]
+					
+		.container
 			.content
 				block Content
 			.footer
