@@ -176,7 +176,7 @@ co(function * ()
 		server.app = app;
 		
 		server.listen_ = thunkify(server.listen);
-		yield server.listen_(options.port, options.host);
+		yield server.listen_(options.port);
 		console.log('server listening on ' + options.getAbsoluteUri());
 		return server;
 	}
