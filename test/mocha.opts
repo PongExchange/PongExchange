@@ -2,5 +2,3 @@
 --ui tdd
 --timeout 10000
 --bail
-
---require src/node_modules/Migrator.js
