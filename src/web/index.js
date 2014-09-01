@@ -60,6 +60,7 @@ co(function * ()
 		var lessPath = '/static/less';
 		var compiledLessPath = '/static/css-less';
 		var jsPath = '/static/js';
+		var imagesPath = '/static/images';
 
 		var compiledLessDirectory = Path.join(__dirname, compiledLessPath);
 		var less = thunkify(lessMiddleware(Path.join(__dirname, lessPath), {
@@ -85,6 +86,9 @@ co(function * ()
 			js: {
 				jQuery: jsPath + '/' + (isLocal ? 'jquery-2.1.1.js' : 'jquery-2.1.1.min.js'),
 				bootstrap: jsPath + '/' + (isLocal ? 'bootstrap.js' : 'bootstrap.min.js')
+			},
+			images: {
+				navLogo: imagesPath + '/NavLogo.png'
 			}
 		};
 
