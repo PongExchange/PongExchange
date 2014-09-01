@@ -1,0 +1,11 @@
+extends ../layout
+
+block Header
+    h1 Recent Games
+
+block Content
+    ul
+
+        each game, i in recentGames
+            li
+                game.winner + ' defeats ' + game.loser + ' : ' + game.winnerScore + '-' + game.loserScore + ' [' + game.time + ']'
