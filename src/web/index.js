@@ -118,7 +118,7 @@ co(function * ()
 		app.get('/games/new', Controllers.Games.newGET);
 		app.post('/games/create', Controllers.Games.createPOST);
 
-		app.get('/recentgames', Controllers.RecentGames.indexGET);
+		app.get('/games/recent', Controllers.RecentGames.indexGET);
 
 		app.get('/leaderboard', Controllers.Leaderboard.indexGET);
 		app.get('/leaderboard/overall', Controllers.Leaderboard.overallGET);

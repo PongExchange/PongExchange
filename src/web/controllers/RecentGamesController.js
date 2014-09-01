@@ -7,7 +7,7 @@
     function * indexGET() {
         var recentGames = yield recentgames.getRecentGames();
         var model = { recentGames: recentGames }
-        yield this.render('recentgames/index', model);
+        yield this.render('games/recent', model);
     }
 
     //function * allGET() {
