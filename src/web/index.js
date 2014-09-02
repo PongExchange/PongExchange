@@ -19,8 +19,6 @@ co(function * ()
 	var koaFavicon = require('koa-favicon');
 	var KoaJade = require('koa-jade');
 	var koaMount = require('koa-mount');
-	var koaPassport = require('koa-passport');
-	var koaSession = require('koa-session');
 	var koaStatic = require('koa-static');
 	var koaTrail = require('koa-trail');
 	var lessMiddleware = require('less-middleware');
@@ -90,7 +88,6 @@ co(function * ()
 			yield next;
 		}));
 
-//		app.use(koaMount(Config.web.static.compiledLessPath, koaStatic(compiledLessDirectory)));
 		app.use(koaMount('/static', koaStatic(Path.join(__dirname, 'static'))));
 		
 		var jadeGlobals = yield getJadeGlobals();
@@ -103,38 +100,28 @@ co(function * ()
 		}));
 		
 		app.use(Middleware.jadeContextVariables);
-
-		// setup sessions and auth
-		require('Auth');
-		app.keys = ["it's a secret to everybody"];
-		app.use(koaSession());
-		app.use(koaPassport.initialize());
-		app.use(koaPassport.session());
 		
 		app.use(koaTrail(app));
 	}
 
 	function * setupRoutes (app)
 	{
+		// --- Routes not requiring auth ---
 		app.post('*', koaBody());
+		app.all('*', Controllers.Auth.loadSession);
 		app.get('/', Controllers.Home.indexGET);
 		app.post('/', Controllers.Home.indexPOST);
 		
-		app.get('/auth/login', Controllers.Auth.loginGET);
-		app.get('/auth/google', koaPassport.authenticate('google'));
-		app.get('/auth/google/callback', 
-			koaPassport.authenticate('google', { // TODO: this needs to have a returnUrl on the query
-				successRedirect: '/',
-				failureRedirect: '/auth/login'
-			})
-		);
-		app.get('/auth/logout', Controllers.Auth.logoutGET);
-		app.post('/auth/logout', Controllers.Auth.logoutPOST);
+		app.get('/login', Controllers.Auth.loginGET);
+		app.post('/auth/google/callback', Controllers.Auth.googleCallbackPOST);
+		app.get('/logout', Controllers.Auth.logoutGET);
+		app.post('/logout', Controllers.Auth.logoutPOST);
+		
+		// --- Routes requiring auth ---
+		
+		app.all('*', Controllers.Auth.requireSession);
 		
 		app.get('/example/:something', Controllers.Home.exampleGET);
-
-		// gotta be logged in to add new games
-		app.all('/games/*', authenticate);
 		
 		// TODO: make create point to new and alter the above to be .all('/games/new')
 		app.get('/games/new', Controllers.Games.newGET);
@@ -150,6 +137,7 @@ co(function * ()
 	{
 		var app = koa();
 
+		app.keys = Config.sessions.signingKeys;
 		yield setupMiddleware(app, options);
 		yield setupRoutes(app);
 
@@ -167,18 +155,6 @@ co(function * ()
 		yield server.listen_(options.port);
 		console.log('server listening on ' + options.getAbsoluteUri());
 		return server;
-	}
-
-	function* authenticate (next)
-	{
-		if (this.isAuthenticated())
-		{
-			yield next;
-		}
-		else
-		{
-			this.redirect('/auth/login');
-		}
 	}
 	
 	function * getJadeGlobals ()

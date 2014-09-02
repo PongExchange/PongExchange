@@ -22,11 +22,11 @@ html
 				.navbar-form.navbar-left
 					a.btn.btn-primary(href='/games/new') Record Game
 				ul.nav.navbar-nav.navbar-right
-					if user
-						li #[a(href='') #{user.name}]
-						li #[a(href='/auth/logout') Logout]
+					if player
+						li #[a(href='') #{player.name}]
+						li #[a(href='/logout') Logout]
 					else
-						li #[a(href='/auth/login') Sign Up / Login]
+						li #[a(href='/login') Sign Up / Login]
 		.container
 			.content
 				block Content
