@@ -31,14 +31,20 @@ GamesController.newGET= function * ()
 GamesController.createPOST = function * ()
 {
 	var response = this.request.body.fields;
+	var g = new Game();
 
-	var team1IdsArray = response.team1.players;
-	var team1Score = response.team1.score;
+	g.team1 = parseStringIdsToPlayers(response.team1.players);
+	g.team1Score = parseInt(response.team1.score);
 
-	var team2IdsArray = response.team2.players;
-	var team2Score = response.team2.score;
+	g.team2 = parseStringIdsToPlayers(response.team2.players);
+	g.team2Score = parseInt(response.team2.score);
 
-	var game = yield Game.insert(team1IdsArray, team1Score, team2IdsArray, team2Score);
+	yield g.save();
 
 	this.redirect('/');
 };
+
+function parseStringIdsToPlayers (stringArray)
+{
+	return stringArray.map(function (cur) { return { id: parseInt(cur) } });
+}
