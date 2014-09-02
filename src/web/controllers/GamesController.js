@@ -4,6 +4,7 @@
  * ---------------------------------------------------------------- */
 
 var debug = require('neo-debug')('web.GamesController');
+var Player = require('models/Player');
 
 /* =============================================================================
  * 
@@ -20,7 +21,12 @@ var GamesController = module.exports;
 GamesController.newGET= function * ()
 {
   debug('Games new page');
-  yield this.render('games/new');
+  var all = yield Player.getAll();
+  console.log(all);
+  var players = { players: all };
+  console.log(players);
+
+  yield this.render('games/new', players);
 };
 
 GamesController.createPOST = function * ()
