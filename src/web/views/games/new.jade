@@ -9,13 +9,6 @@ block Content
     h3 Record a new game.
 
     form(method='post' action='create')
-        input(type="radio", name='game_type[id]', id='singles', value='1' checked) 
-        | Singles
-        input(type="radio", name='game_type[id]', id='doubles', value='2') 
-        | Doubles
-        
-        br
-
         select(name="team1[players]", data-placeholder="Add player(s) on team 1",multiple class="chosen-select", style="width:300px;", tabindex="1")
             for person in players
                 option(value="#{person.id}") #{person.name}
