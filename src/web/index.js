@@ -193,7 +193,7 @@ co(function * ()
 		globals.css = yield getStaticResourceMap(Config.web.static.cssPath); // third party css
 		
 		// less
-		globals.less = yield getStaticResourceMap(Config.web.static.compiledLessPath, Path.join(__dirname, Config.web.static.lessPath));
+		globals.less = yield getStaticResourceMap(Config.web.static.compiledLessPath, Path.join(__dirname, Config.web.static.lessPath), '.css');
 		
 		// js
 		globals.js = yield getStaticResourceMap(Config.web.static.jsPath);
@@ -205,7 +205,7 @@ co(function * ()
 		return globals;
 	}
 	
-	function * getStaticResourceMap (path, dir)
+	function * getStaticResourceMap (path, dir, ext)
 	{
 		var res = {};
 		if (!dir)
@@ -228,7 +228,7 @@ co(function * ()
 			stats = yield fsStat(Path.join(dir, f));
 			if (stats.isDirectory())
 			{
-				res[fSafe] = yield getStaticResourceMap(fPath, Path.join(dir, f));
+				res[fSafe] = yield getStaticResourceMap(fPath, Path.join(dir, f), ext);
 			}
 			else
 			{
@@ -240,6 +240,12 @@ co(function * ()
 					if (Config.tier === 'local' && res[fSafe])
 						continue;
 					
+				}
+				
+				if (ext !== undefined)
+				{
+					// re-write file extension
+					fPath = fPath.replace(/\.[^.]+$/, ext);
 				}
 				
 				res[fSafe] = fPath;
