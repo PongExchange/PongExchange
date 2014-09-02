@@ -1,28 +1,31 @@
 extends ../layout
 block append Css 
-    link(type='text/css', rel='stylesheet', href=css.chosen)
+		link(type='text/css', rel='stylesheet', href=css.chosen)
 block append Js 
-    script(src=js.chosen_jquery)
-    script(src=js.games)
+		script(src=js.chosen_jquery)
+		script(src=js.games)
 
 block Content
-    h3 Record a new game.
+	div.container
+		form(method='post' action='create' class='new-games-form')
+				h4 Record a new game.
+				div.form-group
+					select(name="team1[players][]", data-placeholder="Add player(s) on team 1",multiple class="chosen-select", style="width:300px;", tabindex="1")
+						for person in players
+							option(value="#{person.id}") #{person.name}
+				div.form-group.score
+						input(type='text', name='team1[score]', placeholder='team 1 score', class='form-control')
+				
+				br
 
-    form(method='post' action='create')
-        select(name="team1[players][]", data-placeholder="Add player(s) on team 1",multiple class="chosen-select", style="width:300px;", tabindex="1")
-            for person in players
-                option(value="#{person.id}") #{person.name}
-
-        input(type='text', name='team1[score]', placeholder='team 1 score')
-        
-        br
-
-        select(name="team2[players][]", data-placeholder="Add player(s) on team 2",multiple class="chosen-select", style="width:300px;", tabindex="1")
-            for person in players
-                option(value="#{person.id}") #{person.name}
-        
-        input(type='text', name='team2[score]', placeholder='team 2 score')
-        
-        br
-        
-        input(type='submit', class='btn')
+				div.form-group
+					select(name="team2[players][]", data-placeholder="Add player(s) on team 2",multiple class="chosen-select", style="width:300px;", tabindex="1")
+						for person in players
+							option(value="#{person.id}") #{person.name}
+				
+				div.form-group.score
+						input(type='text', name='team2[score]', placeholder='team 2 score', class='form-control')
+				
+				br
+				
+				input(type='submit', class='btn btn-default')

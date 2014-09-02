@@ -21,24 +21,24 @@ var GamesController = module.exports;
 
 GamesController.newGET= function * ()
 {
-  debug('Games new page');
-  var all = yield Player.getAll();
-  var players = { players: all };
+	debug('Games new page');
+	var all = yield Player.getAll();
+	var players = { players: all };
 
-  yield this.render('games/new', players);
+	yield this.render('games/new', players);
 };
 
 GamesController.createPOST = function * ()
 {
-  var response = this.request.body.fields;
+	var response = this.request.body.fields;
 
-  var team1IdsArray = response.team1.players;
-  var team1Score = response.team1.score;
+	var team1IdsArray = response.team1.players;
+	var team1Score = response.team1.score;
 
-  var team2IdsArray = response.team2.players;
-  var team2Score = response.team2.score;
+	var team2IdsArray = response.team2.players;
+	var team2Score = response.team2.score;
 
-  var game = yield Game.insert(team1IdsArray, team1Score, team2IdsArray, team2Score);
+	var game = yield Game.insert(team1IdsArray, team1Score, team2IdsArray, team2Score);
 
-  this.redirect('/');
+	this.redirect('/');
 };
