@@ -183,23 +183,7 @@ co(function * ()
 	
 	function * getJadeGlobals ()
 	{
-		var isLocal = Config.tier === 'local';
-		var globals = {
-			title: 'Pong Exchange',
-			css: {
-				main: Config.web.static.compiledLessPath + '/main.css',
-				chosen: Config.web.static.cssPath + '/' + (isLocal ? 'chosen.css' : 'chosen.min.css')
-			},
-			js: {
-				jQuery: Config.web.static.jsPath + '/' + (isLocal ? 'jquery-2.1.1.js' : 'jquery-2.1.1.min.js'),
-				chosen: Config.web.static.jsPath + '/' + (isLocal ? 'chosen.jquery.js' : 'chosen.jquery.min.js'),
-				bootstrap: Config.web.static.jsPath + '/' + (isLocal ? 'bootstrap.js' : 'bootstrap.min.js'),
-				games: Config.web.static.jsPath + '/games.js'
-			},
-			images: {
-				navLogo: Config.web.static.imagesPath + '/NavLogo.png'
-			}
-		};
+		var globals = {};
 		
 		globals.title = 'Pong Exchange';
 		
