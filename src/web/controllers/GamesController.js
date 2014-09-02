@@ -22,9 +22,7 @@ GamesController.newGET= function * ()
 {
   debug('Games new page');
   var all = yield Player.getAll();
-  console.log(all);
   var players = { players: all };
-  console.log(players);
 
   yield this.render('games/new', players);
 };
