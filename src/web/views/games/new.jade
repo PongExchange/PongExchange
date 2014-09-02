@@ -9,23 +9,28 @@ block Content
 	div.container
 		form(method='post' action='create' class='new-games-form')
 				h4 Record a new game.
+
+				br
+
+				h5 team 1
 				div.form-group
-					select(name="team1[players][]", data-placeholder="Add player(s) on team 1",multiple class="chosen-select", style="width:300px;", tabindex="1")
+					select(name="team1[players][]", data-placeholder="player(s)",multiple class="chosen-select select-team-1", style="width:300px;", tabindex="1")
 						for person in players
 							option(value="#{person.id}") #{person.name}
-				div.form-group.score
-						input(type='text', name='team1[score]', placeholder='team 1 score', class='form-control')
+				div.form-group
+						input(type='text', name='team1[score]', placeholder='score', class='form-control score')
 				
 				br
 
+				h5 team 2
 				div.form-group
-					select(name="team2[players][]", data-placeholder="Add player(s) on team 2",multiple class="chosen-select", style="width:300px;", tabindex="1")
+					select(name="team2[players][]", data-placeholder="player(s)",multiple class="chosen-select select-team-2", style="width:300px;", tabindex="1")
 						for person in players
 							option(value="#{person.id}") #{person.name}
 				
-				div.form-group.score
-						input(type='text', name='team2[score]', placeholder='team 2 score', class='form-control')
+				div.form-group
+						input(type='text', name='team2[score]', placeholder='score', class='form-control score')
 				
 				br
 				
-				input(type='submit', class='btn btn-default')
+				input(type='submit', class='btn btn-default submit')
