@@ -10,30 +10,42 @@ suite('Game tests', function ()
 {
 	test('inserting a singles game', function* ()
 	{
-		var p1 = yield TestHelpers.getPlayer();
-		var p2 = yield TestHelpers.getPlayer();
+		var g = new Game();
 		
-		var gameId = yield Game.insert([p1.id], 11, [p2.id], 3);
+		g.team1.push(yield TestHelpers.getPlayer());
+		g.team2.push(yield TestHelpers.getPlayer());
 		
-		var g = yield Game.getById(gameId);
+		g.team1Score = 7;
+		g.team2Score = 11;
 		
+		yield g.save();
+		assert(g.isSaved(), 'should have been saved');
+		
+		// save can swap teams around
 		assert(g.team1Score > g.team2Score, 'team 1 should always win, baby');
+		
+		var gg = yield Game.getById(g.id);
+		assert.deepEqual(g, gg, 'game 1 should be equal to one loaded from the db');
 	});
 
 	test('inserting a doubles game', function* ()
 	{
-		var p1 = yield TestHelpers.getPlayer();
-		var p2 = yield TestHelpers.getPlayer();
+		var g = new Game();
 
-		var p3 = yield TestHelpers.getPlayer();
-		var p4 = yield TestHelpers.getPlayer();
+		g.team1.push(yield TestHelpers.getPlayer());
+		g.team1.push(yield TestHelpers.getPlayer());
+		
+		g.team2.push(yield TestHelpers.getPlayer());
+		g.team2.push(yield TestHelpers.getPlayer());
 
-		var gameId = yield Game.insert([p1.id, p3.id], 6, [p2.id, p4.id], 11);
+		g.team1Score = 11;
+		g.team2Score = 8;
 
-		var g = yield Game.getById(gameId);
+		yield g.save();
+		assert(g.isSaved(), 'should have been saved');
 
-		assert(g.team1Score > g.team2Score, 'team 1 should always win, baby');
-		assert(g.team1.length === 2, 'should be doubles');
+		var gg = yield Game.getById(g.id);
+		assert.deepEqual(g, gg, 'game 1 should be equal to one loaded from the db');
 	});
 	
 });
