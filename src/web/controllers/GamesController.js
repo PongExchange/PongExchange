@@ -4,6 +4,8 @@
  * ---------------------------------------------------------------- */
 
 var debug = require('neo-debug')('web.GamesController');
+var Player = require('models/Player');
+var Game = require('models/Game');
 
 /* =============================================================================
  * 
@@ -20,13 +22,23 @@ var GamesController = module.exports;
 GamesController.newGET= function * ()
 {
   debug('Games new page');
-  yield this.render('games/new');
+  var all = yield Player.getAll();
+  var players = { players: all };
+
+  yield this.render('games/new', players);
 };
 
 GamesController.createPOST = function * ()
 {
-  console.log(this.request.body);
+  var response = this.request.body.fields;
 
-  var name = this.request.body.fields.name;
+  var team1IdsArray = response.team1.players;
+  var team1Score = response.team1.score;
+
+  var team2IdsArray = response.team2.players;
+  var team2Score = response.team2.score;
+
+  var game = yield Game.insert(team1IdsArray, team1Score, team2IdsArray, team2Score);
+
   this.redirect('/');
 };
