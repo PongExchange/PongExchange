@@ -9,7 +9,7 @@ block Content
     h3 Record a new game.
 
     form(method='post' action='create')
-        select(name="team1[players]", data-placeholder="Add player(s) on team 1",multiple class="chosen-select", style="width:300px;", tabindex="1")
+        select(name="team1[players][]", data-placeholder="Add player(s) on team 1",multiple class="chosen-select", style="width:300px;", tabindex="1")
             for person in players
                 option(value="#{person.id}") #{person.name}
 
@@ -17,7 +17,7 @@ block Content
         
         br
 
-        select(name="team2[players]", data-placeholder="Add player(s) on team 2",multiple class="chosen-select", style="width:300px;", tabindex="1")
+        select(name="team2[players][]", data-placeholder="Add player(s) on team 2",multiple class="chosen-select", style="width:300px;", tabindex="1")
             for person in players
                 option(value="#{person.id}") #{person.name}
         
