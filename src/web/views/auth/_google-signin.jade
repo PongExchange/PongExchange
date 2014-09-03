@@ -1,0 +1,9 @@
+#signinButton.navbar-form
+	span.g-signin(
+		data-scope=login.scopes,
+		data-clientid=login.clientId,
+		data-redirecturi="postmessage",
+		data-accesstype="offline",
+		data-cookiepolicy="single_host_origin",
+		data-width='wide',
+		data-callback="signInCallback")

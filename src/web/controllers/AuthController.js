@@ -76,9 +76,11 @@ AuthController.logoutGET = function*()
 	{
 		yield this.session.delete();
 		this.cookies.set(Config.sessions.name, '', { expires: new Date(Date.now() - Config.sessions.length), signed: true });
+		this.session = null;
+		this.player = null;
 	}
 	
-	this.redirect('/');
+	yield this.render('auth/logout');
 };
 
 AuthController.requireSession = function * (next)

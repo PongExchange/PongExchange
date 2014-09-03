@@ -10,8 +10,17 @@
 
 function signInCallback (authResult)
 {
+	console.log(authResult);
 	if (authResult.code)
 	{
+		console.log('code');
+		if (window.loggingOut && authResult.status.method === 'AUTO')
+		{
+			console.log('signing out');
+			gapi.auth.signOut();
+			return;
+		}
+		
 		$.post('/auth/google/callback', { code: authResult.code })
 			.done(function (data)
 			{

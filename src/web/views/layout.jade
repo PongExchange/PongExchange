@@ -10,36 +10,32 @@ html
 			script(src=js.bootstrap)
 			if (!player)
 				script(src'//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js')
-				script(src=js.login.google)
+				script(src=js.auth.google_login)
 
 	body
-		.navbar.navbar-default(role='navigation')
-			.container
-				.navbar-header
-					a.navbar-brand.navbar-logo(href='/') #[img(src=images.NavLogo)]
-				ul.nav.navbar-nav
-					li #[a(href='') Players]
-					li #[a(href='/games/recent') Games]
-					li #[a(href='') Tournaments]
-					li #[a(href='') Rules]
-				.navbar-form.navbar-left
-					a.btn.btn-primary(href='/games/new') Record Game
-				ul.nav.navbar-nav.navbar-right
-					if player
-						li.dropdown
-							a.dropdown-toggle(href='', data-toggle='dropdown') #{player.name} #[span.caret]
-							ul.dropdown-menu(role='menu')
-								li: a(href='/logout') Logout
-					else
-						#signinButton.navbar-form
-							span.g-signin(
-							data-scope=login.scopes,
-							data-clientid=login.clientId,
-							data-redirecturi="postmessage",
-							data-accesstype="offline",
-							data-cookiepolicy="single_host_origin",
-							data-width='wide',
-							data-callback="signInCallback")
+		block NavBar
+			.navbar.navbar-default(role='navigation')
+				.container
+					.navbar-header
+						a.navbar-brand.navbar-logo(href='/') #[img(src=images.NavLogo)]
+					ul.nav.navbar-nav
+						block NavBarLinks
+							li: a(href='') Players
+							li: a(href='/games/recent') Games
+							li: a(href='') Tournaments
+							li: a(href='') Rules
+					.navbar-form.navbar-left
+						block NavBarButtons
+							a.btn.btn-primary(href='/games/new') Record Game
+					ul.nav.navbar-nav.navbar-right
+						block NavBarRight
+							if player
+								li.dropdown
+									a.dropdown-toggle(href='', data-toggle='dropdown') #{player.name} #[span.caret]
+									ul.dropdown-menu(role='menu')
+										li: a(href='/logout') Logout
+							else
+								include auth/_google-signin
 		.container
 			.content
 				block Content
