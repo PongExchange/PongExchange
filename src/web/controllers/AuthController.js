@@ -70,27 +70,7 @@ AuthController.loadSession = function * (next)
 	yield next;
 };
 
-AuthController.loginGET = function*()
-{
-	if (this.session)
-	{
-		this.redirect('/');
-		return;
-	}
-	yield this.render('auth/login', { clientId: Config.google.clientId, scopes: Config.google.scopes.join(' ') });
-};
-
 AuthController.logoutGET = function*()
-{
-	if (!this.session)
-	{
-		this.redirect('/');
-		return;
-	}
-	yield this.render('auth/logout');
-};
-
-AuthController.logoutPOST = function*()
 {
 	if (this.session)
 	{
@@ -104,7 +84,7 @@ AuthController.logoutPOST = function*()
 AuthController.requireSession = function * (next)
 {
 	if (!this.session)
-		this.redirect('/login');
+		yield this.render('auth/requires-login');
 	else
 		yield next;
 };

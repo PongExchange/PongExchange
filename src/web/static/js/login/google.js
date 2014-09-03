@@ -10,20 +10,16 @@
 
 function signInCallback (authResult)
 {
-	console.log(authResult);
 	if (authResult.code)
 	{
 		$.post('/auth/google/callback', { code: authResult.code })
 			.done(function (data)
 			{
-				if (data && data.url)
-				{
-					window.location.href = data.url;
-				}
+				window.location.reload();
 			});
 	}
-	else if (authResult.error)
+	else if (authResult.error && authResult.error !== 'immediate_failed')
 	{
-		console.log('There was an error: ' + authResult.error);
+		console.log('There a Google Sign in error: ' + authResult.error);
 	}
 }
