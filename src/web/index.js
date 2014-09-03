@@ -113,7 +113,7 @@ co(function * ()
 		app.post('/', Controllers.Home.indexPOST);
 		
 		app.post('/auth/google/callback', Controllers.Auth.googleCallbackPOST);
-		app.get('/logout', Controllers.Auth.logoutGET);
+		app.post('/logout', Controllers.Auth.logoutPOST);
 		
 		// --- Routes requiring auth ---
 		

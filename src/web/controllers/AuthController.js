@@ -70,7 +70,7 @@ AuthController.loadSession = function * (next)
 	yield next;
 };
 
-AuthController.logoutGET = function*()
+AuthController.logoutPOST = function*()
 {
 	if (this.session)
 	{
