@@ -1,12 +1,11 @@
 extends ../layout
 
+append Css
+	style.
+		#signinButton { display: none; }
+
 append Js
-	script(src=js.jquery)
-	script window.pongLogout = { clientId: "!{login.clientId}", scopes: "!{login.scopes}" };
 	script(src=js.auth.google_logout)
-	//script(src'//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js')
-	//script(src='https://apis.google.com/js/plusone.js')
-	//script(src='https://apis.google.com/js/client:plusone.js?onload=onGoogleLoad')
 
 block NavBarLinks
 block NavBarButtons
