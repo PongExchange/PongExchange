@@ -3,6 +3,12 @@ extends ../layout
 block Content
     h2 Recent Games
     table.table.table-striped
+      tr
+        th Game
+        th Score
+        th Date played
       each game, i in recentGames
         tr
-          td #{game.winner} defeats #{game.loser}: #{game.winnerScore}-#{game.loserScore} [#{game.time}]
+          td #{game.winner} defeats #{game.loser}
+          td #{game.winnerScore}-#{game.loserScore} 
+          td #{game.time}
