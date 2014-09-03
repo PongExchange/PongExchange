@@ -10,7 +10,7 @@
 
 function signInCallback (authResult)
 {
-	console.log(authResult);
+//	console.log(authResult);
 	if (authResult.code)
 	{
 		$.post('/auth/google/callback', { code: authResult.code })
@@ -21,6 +21,13 @@ function signInCallback (authResult)
 	}
 	else if (authResult.error && authResult.error !== 'immediate_failed')
 	{
-		console.log('There a Google Sign in error: ' + authResult.error);
+		switch (authResult.error)
+		{
+			case 'immediate_failed':
+			case 'user_signed_out':
+				break;
+			default:
+				console.log('There a Google Sign in error: ' + authResult.error);
+		}
 	}
 }
