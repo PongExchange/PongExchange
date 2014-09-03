@@ -1,12 +1,12 @@
 extends ../layout
 
-block Js
+append Js
 	script(src=js.jquery)
 	script window.pongLogout = { clientId: "!{login.clientId}", scopes: "!{login.scopes}" };
 	script(src=js.auth.google_logout)
 	//script(src'//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js')
 	//script(src='https://apis.google.com/js/plusone.js')
-	script(src='https://apis.google.com/js/client:plusone.js?onload=onGoogleLoad')
+	//script(src='https://apis.google.com/js/client:plusone.js?onload=onGoogleLoad')
 
 block NavBarLinks
 block NavBarButtons
@@ -16,5 +16,5 @@ block Content
 	.bs-callout-info
 		h4 Logging you out...
 		p Give us just a second.
-	//include _google-signin
+	include _google-signin
 	

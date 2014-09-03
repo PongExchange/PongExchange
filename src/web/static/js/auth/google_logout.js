@@ -7,11 +7,11 @@ function onGoogleLoad ()
 //		cookiepolicy: 'single_host_origin',
 //		callback: 'signInCallback'
 //	});
-	gapi.auth.authorize({
-		client_id: window.pongLogout.clientId,
-		scope: window.pongLogout.scopes,
-		immediate: true
-	}, signInCallback);
+//	gapi.auth.authorize({
+//		client_id: window.pongLogout.clientId,
+//		scope: window.pongLogout.scopes,
+//		immediate: true
+//	}, signInCallback);
 }
 
 function signInCallback (authResult)
