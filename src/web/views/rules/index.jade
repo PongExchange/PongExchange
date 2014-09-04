@@ -1,0 +1,109 @@
+extends ../layout
+
+append Css
+	link(type='text/css', rel='stylesheet', href=less.rules)
+
+block Content
+	h1 Table Tennis Rules
+	p The #[em official] rules of table tennis are governed by the #[a(href='http://www.ittf.com/') Internation Table Tennis Foundation] (ITTF). If you'd like to read an eight page PDF of all the rules (including boring details about table, ball, and net dimentions, materials, weights, etc.), #[a(href='') click here]. Otherwise, just read this page for a summary of everything you'll actually care about.
+	
+	ul
+		li: a(href='#serving') Serving
+		li: a(href='#returns') Returns
+		li: a(href='#let') Let
+		li: a(href='#games') Games
+		li: a(href='#matches') Matches
+		li: a(href='#winning-points') Winning Points
+		li: a(href='#doubles') Doubles
+		li: a(href='#faq') Frequently Asked Questions
+	
+	h3#serving Serving
+	p
+		ul
+			li Throw the ball straight up at least 6 inches, and make sure you don't put any spin on it.
+			li Don't obstruct your opponent's view of the ball during the serve (the hand you used to throw the ball needs to go down and out of the way - never upward).
+			li Strike the ball behind the end line of the table. This extends in an imaginary line off the sides of the table too.
+			li After striking the ball, it should hit your side of the table once, then cross over the net and hit your opponent's side.
+	
+	h3#returns Returns
+	p After the serve, and continuously thereafter until a point is won:
+		ul
+			li Don't let the ball hit your side of the table more than once before striking it.
+			li Strike the ball so that it passes over, or around, the net and lands on your opponent's side of the table.
+			li After striking the ball, don't let the ball hit your side of the table before landing on your opponent's side.
+	
+	h3#let Let
+	p A let is when a rally does not result in a point for either team. This can happen for a few reasons:
+		ul
+			li If the ball hits the net during the serve, but was otherwise correct.
+			li If the opponent wasn't ready when the serve started.
+			li If someone other than the players interfere with, or inturrupt, a rally.
+			li If the players disagree about whether a serve was legal.
+	
+	h3#games Games
+	p Games are played to 11 points. If the score becomes 10-10, this is referred to as deuce.
+		ul
+			li Games are played to 11 points.
+			li The serving team alternates every two points.
+			li If the score becomes 10-10, then:
+				ul
+					li The serving team alternates on every point thereafter (instead of every two points).
+					li The score is announce as "deuce" on the next serve.
+					li Following deuce, if the team about to serve won the previous point, the score is announced as "add-in." Otherwise, announce "add-out".
+					li If the same team wins both deuce and add-in/out, they win the game. Record the score as 11-10. Otherwise, the score is reset to deuce.  
+	
+	h3#matches Matches
+	p Matches consist of the best of any odd number of games, but best of 3 is most common. After each game in a match, the opponents should switch to the opposite side of the table, and the team which received first in the previous game should serve first in the next game.
+	
+	h3#winning-points Winning Points
+	p You win a point if:
+		ul
+			li Your opponent fails to successfully serve or return to you.
+			li Your opponent strikes the ball twice in succession.
+			li The hand of your opponent, which is not holding a paddle/racket, touches the table (off-hand on the table).
+			li Your opponent touches the net (the ball hitting the net is okay, your hand or paddle touching the net is not).
+	
+	h3#doubles Doubles (two versus two)
+	p In doubles, there are a few additional rules. If your opponent fails to follow any of them, you win a point. If these rules are hard to visualize, don't worry too much. Try to play with others who are used to doubles play, and it will make sense.
+	p For illustrating examples in the bullet points below, we'll assume there is a team A and a team B consisting of players A1, A2, B1, and B2.
+		ul
+			li During the serve, the ball must hit the right half of the table on the server's side and cross diagonally over the net to land on the opposite half of the table on the opponent's side.
+			li Players on the same team must alternate returns. A1 should serve to B1 who returns to A2 who returns to B2 who returns to A1, etc. During a game the person you are receiving from, and the person you are serving to, should never change.
+			li When the serve alternates teams, the players on the team which was previously serving alternate positions. This means if A1 was serving to B1, when it's team B's turn to serve, B1 should be serving to A2. When the serve alternates back to team A, A2 will be serving to B2, and so on.
+			li In matches, players should alternate which opponent they are serving to with each game. If A1 is serving B1 in game 1, then A1 should serve B2 in game 2. The configuration of the third game should be the same as the first game.
+	
+	#faq
+		h3 Frequently Asked Questions
+		
+		h4#edge-of-table: a(href='#edge-of-table') What if the ball hits the edge of the table?
+		p The edge of the table is still considered part of the surface. If the ball hits the side of the table, but not the edge (meaning it hit no portion of the top surface) then it is out. We call hitting the edge of the table a "dream."
+		
+		h4#how-many-lets: a(href='#how-many-lets') How many lets do I get?
+		p There is no limit to how many lets you get. Simply repeat until you either successfully serve, or you #[em fault] (an illegal serve which is not a let).
+		
+		h4#doubles-let: a(href='#doubles-let') In doubles, if the ball hits the net on the serve, but lands on the wrong half of the opponent's side, is that a let?
+		p No, it is a fault. The official rules say that the serve is a let if it hits the net, but is otherwise correct, and landing on the wrong half is not correct.
+		
+		h4#hits-my-hand: a(href='#hits-my-hand') What if the ball hits my hand?
+		p Sometimes the ball hits your hand or wrist instead of your paddle, and sometimes you get lucky and it still makes it back to the other side of the table. That is perfectly valid. However, if it hits any other part of your body, such as your arm or your hand which is not holding the paddle, then you lose the point.
+		
+		h4#net-on-return: a(href='#net-on-return') What if the ball touches the net on a return?
+		p As long as it's not the serve, it's okay for the ball to hit the net.
+		
+		h4#side-of-table-serve: a(href='#side-of-table-serve') Can the ball go off the side of the table on a serve?
+		p Yes. There are no restrictions beyond what is listed in the #[a(href='#serving') Serving paragraph] above and serving across in #[a(href='#doubles') doubles].
+		
+		h4#game-point-serving: a(href='#game-point-serving') Who serves on game point?
+		p There are no special rules relating to serving on game point. Follow the normal #[a(href='#games') serve alternation rules].
+		
+		h4#hitting-out-ball: a(href='#hitting-out-ball') If the ball was out but I still hit it, do I lose the point?
+		p No, unless the ball was still directly above, or heading towards, the table. In other words, if the ball has already passed beyond the back or sides of the table, it is out of play and hitting it is of no consequence. If you hit it before that, then you lose the point because it's impossible to know for sure whether or not it would have hit.
+		
+		h4#middle-line: a(href='#middle-line') In doubles, if the serve hits the middle white line, is that in or out?
+		p It's in. The white line running down the middle of the table is considered part of the right half on both sides. 
+		
+		h4#swing-and-miss: a(href='#swing-and-miss') What if, during the serve, I swing and miss?
+		p That's a "fault" and you lose the point.
+		
+		h4#no-swing: a(href='#no-swing') What if I toss the ball up, but don't swing at it?
+		p The official rules dictate that once the ball leaves your hand with the intention of serving, it is in play. Therefore, not swinging would count as a fault. However, if the reason that you decide to not swing is because your opponent is not ready, or the score was being clarified, or any other circumstance where is seems prudent to delay the serve, then that is considered a let. You can't taunt your opponent by tossing the ball up with no intention of serving.

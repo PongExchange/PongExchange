@@ -34,6 +34,7 @@ co(function * ()
 	Controllers.Games = require('./controllers/GamesController');
 	Controllers.Leaderboard = require('./controllers/LeaderboardController');
 	Controllers.RecentGames = require('./controllers/RecentGamesController');
+	Controllers.Rules = require('./controllers/RulesController');
 
 	/* -------------------------------------------------------------------
 	 * Initialization
@@ -111,6 +112,8 @@ co(function * ()
 		app.all('*', Controllers.Auth.loadSession);
 		app.get('/', Controllers.Home.indexGET);
 		app.post('/', Controllers.Home.indexPOST);
+		
+		app.get('/rules', Controllers.Rules.indexGET);
 		
 		app.post('/auth/google/callback', Controllers.Auth.googleCallbackPOST);
 		app.post('/logout', Controllers.Auth.logoutPOST);
