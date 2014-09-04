@@ -33,7 +33,6 @@ co(function * ()
 	Controllers.Home = require('./controllers/HomeController');
 	Controllers.Games = require('./controllers/GamesController');
 	Controllers.Leaderboard = require('./controllers/LeaderboardController');
-	Controllers.RecentGames = require('./controllers/RecentGamesController');
 	Controllers.Rules = require('./controllers/RulesController');
 
 	/* -------------------------------------------------------------------
@@ -127,8 +126,7 @@ co(function * ()
 		// TODO: make create point to new and alter the above to be .all('/games/new')
 		app.get('/games/new', Controllers.Games.newGET);
 		app.post('/games/create', Controllers.Games.createPOST);
-
-		app.get('/games/recent', Controllers.RecentGames.indexGET);
+		app.get('/games/recent', Controllers.Games.recentGET);
 
 		app.get('/leaderboard', Controllers.Leaderboard.indexGET);
 		app.get('/leaderboard/overall', Controllers.Leaderboard.overallGET);

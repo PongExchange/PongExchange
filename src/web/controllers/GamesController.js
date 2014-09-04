@@ -6,6 +6,7 @@
 var debug = require('neo-debug')('web.GamesController');
 var Player = require('models/Player');
 var Game = require('models/Game');
+var RecentGames = require('RecentGames');
 
 /* =============================================================================
  * 
@@ -50,3 +51,10 @@ function parseStringIdsToPlayers (stringArray)
 {
 	return stringArray.map(function (cur) { return { id: parseInt(cur) } });
 }
+
+GamesController.recentGET = function * ()
+{
+  var recentGames = yield RecentGames.getRecentGames();
+  var games = { recentGames: recentGames }
+  yield this.render('games/recent', games);
+ }
