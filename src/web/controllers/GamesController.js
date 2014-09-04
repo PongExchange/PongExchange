@@ -39,6 +39,8 @@ GamesController.createPOST = function * ()
 	g.team2 = parseStringIdsToPlayers(response.team2.players);
 	g.team2Score = parseInt(response.team2.score);
 
+	g.recorded_by_player_id = this.player.id;
+
 	yield g.save();
 
 	this.redirect('/');
