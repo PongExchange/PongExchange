@@ -1,0 +1,24 @@
+extends ../layout
+
+block Content
+	h2 #{players.length} Players
+	table.table
+		thead
+			tr
+				th
+				th(colspan=2) Singles
+				th(colspan=2) Doubles 
+			tr
+				th Name
+				th Played
+				th Won
+				th Played
+				th Won
+		tbody
+		each p in players
+			tr
+				td #{p.name}
+				td #{p.stats.singlesGamesPlayed}
+				td #{p.stats.singlesGamesWon}
+				td #{p.stats.doublesGamesPlayed}
+				td #{p.stats.doublesGamesWon}

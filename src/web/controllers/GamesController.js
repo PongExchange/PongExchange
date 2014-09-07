@@ -24,6 +24,10 @@ GamesController.newGET= function * ()
 {
 	debug('Games new page');
 	var all = yield Player.getAll();
+	
+	// sort by name asc
+	all.sort(function(p1, p2) { return p1.name.localeCompare(p2.name); });
+	
 	var players = { players: all };
 
 	yield this.render('games/new', players);
@@ -54,7 +58,7 @@ function parseStringIdsToPlayers (stringArray)
 
 GamesController.recentGET = function * ()
 {
-  var recentGames = yield RecentGames.getRecentGames();
-  var games = { recentGames: recentGames }
-  yield this.render('games/recent', games);
+	var recentGames = yield RecentGames.getRecentGames();
+	var games = { recentGames: recentGames };
+	yield this.render('games/recent', games);
  }

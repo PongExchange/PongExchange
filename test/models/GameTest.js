@@ -3,7 +3,6 @@
 var assert = require('assert');
 var Player = require('../../src/node_modules/models/Player');
 var Game = require('../../src/node_modules/models/Game');
-
 var TestHelpers = require('TestHelpers');
 
 suite('Game tests', function ()
@@ -25,7 +24,7 @@ suite('Game tests', function ()
 		assert(g.team1Score > g.team2Score, 'team 1 should always win, baby');
 		
 		var gg = yield Game.getById(g.id);
-		assert.deepEqual(g, gg, 'game 1 should be equal to one loaded from the db');
+		assert.deepEqual(gg, g, 'game 1 should be equal to one loaded from the db');
 	});
 
 	test('inserting a doubles game', function* ()

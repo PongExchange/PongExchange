@@ -33,6 +33,7 @@ co(function * ()
 	Controllers.Home = require('./controllers/HomeController');
 	Controllers.Games = require('./controllers/GamesController');
 	Controllers.Leaderboard = require('./controllers/LeaderboardController');
+	Controllers.Players = require('./controllers/PlayersController');
 	Controllers.Rules = require('./controllers/RulesController');
 
 	/* -------------------------------------------------------------------
@@ -111,6 +112,8 @@ co(function * ()
 		app.all('*', Controllers.Auth.loadSession);
 		app.get('/', Controllers.Home.indexGET);
 		app.post('/', Controllers.Home.indexPOST);
+		
+		app.get('/players', Controllers.Players.indexGET);
 		
 		app.get('/rules', Controllers.Rules.indexGET);
 		
