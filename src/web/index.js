@@ -128,7 +128,7 @@ co(function * ()
 		
 		// TODO: make create point to new and alter the above to be .all('/games/new')
 		app.get('/games/new', Controllers.Games.newGET);
-		app.post('/games/create', Controllers.Games.createPOST);
+		app.post('/games/new', Controllers.Games.newPOST);
 		app.get('/games/recent', Controllers.Games.recentGET);
 
 		app.get('/leaderboard', Controllers.Leaderboard.indexGET);

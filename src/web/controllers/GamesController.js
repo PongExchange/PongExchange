@@ -33,7 +33,7 @@ GamesController.newGET= function * ()
 	yield this.render('games/new', players);
 };
 
-GamesController.createPOST = function * ()
+GamesController.newPOST = function * ()
 {
 	var response = this.request.body.fields;
 	var g = new Game();
@@ -61,4 +61,4 @@ GamesController.recentGET = function * ()
 	var recentGames = yield RecentGames.getRecentGames();
 	var games = { recentGames: recentGames };
 	yield this.render('games/recent', games);
- }
+};
