@@ -47,4 +47,21 @@ suite('Game tests', function ()
 		assert.deepEqual(g, gg, 'game 1 should be equal to one loaded from the db');
 	});
 	
+	test('getting recent games', function*()
+	{
+		// add a few games
+		yield TestHelpers.getGame();
+		yield TestHelpers.getGame();
+		
+		var games = yield Game.getRecent();
+		assert(games.length === 2, 'should have found 2 games');
+		assert(games[0].id > games[1].id, games[0].id + ' should come before ' + games[1].id);
+
+		// ensure we limit the games coming back
+		yield TestHelpers.getGame();
+		
+		games = yield Game.getRecent(2);
+		assert(games.length === 2, 'should have found 2 games');
+		
+	});
 });
