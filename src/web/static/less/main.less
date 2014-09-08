@@ -3,3 +3,24 @@
 @import "layout";
 @import "callouts";
 
+
+// can have 1 or 2 players
+.team
+{
+	.player
+	{
+		display: inline-block;
+
+		// display doubles teams like "Jim & Bob"
+		&:nth-child(2)
+		{
+			margin-left: 3px;
+
+			&::before
+			{
+				padding-right: 3px;
+				content: '&';
+			}
+		}
+	}
+}

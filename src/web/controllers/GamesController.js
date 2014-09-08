@@ -58,7 +58,6 @@ function parseStringIdsToPlayers (stringArray)
 
 GamesController.recentGET = function * ()
 {
-	var recentGames = yield RecentGames.getRecentGames();
-	var games = { recentGames: recentGames };
-	yield this.render('games/recent', games);
+	var games = yield Game.getRecent();
+	yield this.render('games/recent', { games: games });
 };

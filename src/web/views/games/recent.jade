@@ -1,6 +1,8 @@
 extends ../layout
-block append Css 
-		link(type='text/css', rel='stylesheet', href=less.recentgames)
+
+mixin renderTeam(team)
+	each player, i in team
+		span.player #{player.name}
 
 block Content
 		h2 Recent Games
@@ -10,9 +12,11 @@ block Content
 				th Loser 
 				th Score
 				th Date played
-			each game, i in recentGames
+			each game in games
 				tr
-					td #{game.winner}
-					td #{game.loser}
-					td #{game.winnerScore}-#{game.loserScore} 
-					td #{game.time}
+					td.team 
+						+renderTeam(game.team1)
+					td.team
+						+renderTeam(game.team2)
+					td #{game.team1Score}-#{game.team2Score} 
+					td #{game.playedDateRelativeTime()}
