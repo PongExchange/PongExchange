@@ -6,7 +6,6 @@
 var debug = require('neo-debug')('web.GamesController');
 var Player = require('models/Player');
 var Game = require('models/Game');
-var RecentGames = require('RecentGames');
 
 /* =============================================================================
  * 
