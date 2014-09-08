@@ -32,9 +32,11 @@ html
 							if player
 								form#logoutForm(action='/logout', method='post')
 								li.dropdown
-									a.dropdown-toggle(href='', data-toggle='dropdown') #{player.name} #[span.caret]
+									a.dropdown-toggle(href='', data-toggle='dropdown')
+										if player.imageUrl
+											img.profile-image(src=player.imageUrl)
+										| #{player.name} #[span.caret]
 									ul.dropdown-menu(role='menu')
-										li: a(href='') Test
 										li: a(href='/logout', onclick="document.getElementById('logoutForm').submit(); return false;") Logout
 							else
 								include auth/_google-signin

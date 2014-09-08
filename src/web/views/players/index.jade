@@ -1,14 +1,19 @@
 extends ../layout
 
+append Css
+	link(type='text/css', rel='stylesheet', href=less.players)
+
 block Content
 	h2 #{players.length} Players
 	table.table
 		thead
 			tr
 				th
+				th
 				th(colspan=2) Singles
 				th(colspan=2) Doubles 
 			tr
+				th
 				th Name
 				th Played
 				th Won
@@ -17,6 +22,9 @@ block Content
 		tbody
 		each p in players
 			tr
+				td.player-image-cell
+					if p.imageUrl
+						img(src=p.imageUrl)
 				td #{p.name}
 				td #{p.stats.singlesGamesPlayed}
 				td #{p.stats.singlesGamesWon}
