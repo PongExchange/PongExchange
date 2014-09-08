@@ -44,9 +44,14 @@ GamesController.newPOST = function * ()
 	g.team2Score = parseInt(response.team2.score);
 
 	g.recorded_by_player_id = this.player.id;
+	
+	var error = yield g.save();
 
-	yield g.save();
-
+	if (error)
+	{
+		// TODO: need to return the error message
+	}
+	
 	this.redirect('/');
 };
 

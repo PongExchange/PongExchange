@@ -7,7 +7,7 @@ var TestHelpers = require('TestHelpers');
 
 suite('Game tests', function ()
 {
-	test('inserting a singles game', function* ()
+	test('saving a singles game', function* ()
 	{
 		var g = new Game();
 		
@@ -27,7 +27,7 @@ suite('Game tests', function ()
 		assert.deepEqual(gg, g, 'game 1 should be equal to one loaded from the db');
 	});
 
-	test('inserting a doubles game', function* ()
+	test('saving a doubles game', function* ()
 	{
 		var g = new Game();
 
@@ -44,7 +44,38 @@ suite('Game tests', function ()
 		assert(g.isSaved(), 'should have been saved');
 
 		var gg = yield Game.getById(g.id);
-		assert.deepEqual(g, gg, 'game 1 should be equal to one loaded from the db');
+		assert.deepEqual(gg, g, 'game 1 should be equal to one loaded from the db');
+	});
+	
+	test('saving a game with a non-standard score', function*()
+	{
+		// usually scores are to 11, win by 2, but allow anything, as long as there is a winner
+		
+		// went to one deuce
+		var g = yield TestHelpers.getGame({ team1Score: 12, team2Score: 10 });
+		assert(g instanceof Game, 'should have properly saved');
+		
+		// crazy skunk rules
+		g = yield TestHelpers.getGame({ team1Score: 0, team2Score: 7 });
+		assert(g instanceof Game, 'should have properly saved');
+	});
+	
+	test('validation', function*()
+	{
+		var p1 = yield TestHelpers.getPlayer();
+
+		var error = yield TestHelpers.getGame({ team1: [p1], team2: [p1], expectsError: true });
+		assert.equal(error, 'players cannot be on both teams');
+		
+		// try with doubles
+		var p2 = yield TestHelpers.getPlayer();
+		var p3 = yield TestHelpers.getPlayer();
+
+		error = yield TestHelpers.getGame({ team1: [p1, p2], team2: [p1], expectsError: true });
+		assert.equal(error, 'teams should have the same number of players');
+
+		error = yield TestHelpers.getGame({ team1: [p1, p2], team2: [p3, p1], expectsError: true });
+		assert.equal(error, 'players cannot be on both teams');
 	});
 	
 	test('getting recent games', function*()
@@ -62,6 +93,5 @@ suite('Game tests', function ()
 		
 		games = yield Game.getRecent(2);
 		assert(games.length === 2, 'should have found 2 games');
-		
 	});
 });
