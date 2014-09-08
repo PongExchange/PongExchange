@@ -45,9 +45,11 @@ GamesController.newPOST = function * ()
 
 	g.recorded_by_player_id = this.player.id;
 	
-	var error = yield g.save();
-
-	if (error)
+	try
+	{
+		yield g.save();
+	}
+	catch (e)
 	{
 		// TODO: need to return the error message
 	}
