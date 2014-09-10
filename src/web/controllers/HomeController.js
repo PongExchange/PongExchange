@@ -22,10 +22,6 @@ HomeController.indexGET = function * ()
 {
 	debug('Index page');
 
-  var url = yield Player.getUrl(this.player.id);
-
-  console.log({playerUrl: url});
-
-	yield this.render('home/index', {playerUrl: url});
+	yield this.render('home/index');
 
 };

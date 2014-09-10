@@ -23,6 +23,5 @@ PlayersController.profileGET = function*()
   var player = yield Player.getById(this.player.id);
   var stats = yield PlayerStats.getForPlayerId(this.player.id);
 
-console.log({ player: player, stats: stats });
   yield this.render('players/profile', { player: player, stats: stats });
 };

@@ -38,9 +38,8 @@ html
 											img.profile-image(src=player.imageUrl)
 										| #{player.name} #[span.caret]
 									ul.dropdown-menu(role='menu')
-										//li: a(href=player.profileUrl) Profile
+										li: a(href=player.profileUrl) My Profile
 										li: a(href='/logout', onclick="document.getElementById('logoutForm').submit(); return false;") Logout
-										li: a(href="#{playerUrl}") My Profile 
 							else
 								include auth/_google-signin
 		.container

@@ -158,6 +158,7 @@ co(function * ()
 		return server;
 	}
 	
+	
 	function * getJadeGlobals ()
 	{
 		var globals = {};
