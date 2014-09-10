@@ -111,10 +111,10 @@ co(function * ()
 		app.post('*', koaBody());
 		app.all('*', Controllers.Auth.loadSession);
 		app.get('/', Controllers.Home.indexGET);
-		app.post('/', Controllers.Home.indexPOST);
 		
 		app.get('/players', Controllers.Players.indexGET);
-		
+		app.get('/players/:id/:slug', Controllers.Players.profileGET);
+
 		app.get('/rules', Controllers.Rules.indexGET);
 		
 		app.post('/auth/google/callback', Controllers.Auth.googleCallbackPOST);
@@ -124,7 +124,6 @@ co(function * ()
 		
 		app.all('*', Controllers.Auth.requireSession);
 		
-		app.get('/example/:something', Controllers.Home.exampleGET);
 		
 		// TODO: make create point to new and alter the above to be .all('/games/new')
 		app.get('/games/new', Controllers.Games.newGET);

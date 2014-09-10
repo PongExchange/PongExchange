@@ -4,6 +4,7 @@
  * ---------------------------------------------------------------- */
 
 var debug = require('neo-debug')('web.HomeController');
+var Player = require('models/Player');
 
 /* =============================================================================
  * 
@@ -20,18 +21,11 @@ var HomeController = module.exports;
 HomeController.indexGET = function * ()
 {
 	debug('Index page');
-	yield this.render('home/index');
-};
 
-HomeController.indexPOST = function * ()
-{
-	console.log(this.request.query);
-	console.log(this.request.body.fields.test);
-	this.body = this.request.body.fields.test;
-};
+  var url = yield Player.getUrl(this.player.id);
 
-HomeController.exampleGET = function * ()
-{
-	console.log(this.params);
-	this.body = JSON.stringify(this.params);
+  console.log({playerUrl: url});
+
+	yield this.render('home/index', {playerUrl: url});
+
 };
