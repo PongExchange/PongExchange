@@ -1,17 +1,32 @@
 extends ../layout
 
+append Css
+	link(type='text/css', rel='stylesheet', href=less.profile)
+
 block Content
-	h2 #{player.name}
-	table.table Stats
-		tr
-			td Single Games Played
-			td #{stats.singlesGamesPlayed}
-		tr
-			td Single Games Won
-			td #{stats.singlesGamesWon}
-		tr
-			td Double Games Played
-			td #{stats.doublesGamesPlayed}
-		tr
-			td Double Games Won
-			td #{stats.doublesGamesWon}
+	div.profile
+		div.heading
+			img.large-profile-image(src=player.imageUrl)
+			div.heading-info
+				h2 #{player.name}
+				h5 #{player.email}
+			button.edit-button
+				a(href="/players/#{player.id}/edit") Edit Profile
+
+		hr 
+
+		table.table.stats-table
+			tr
+				th Stats
+			tr
+				td Single Games Played
+				td #{stats.singlesGamesPlayed}
+			tr
+				td Single Games Won
+				td #{stats.singlesGamesWon}
+			tr
+				td Double Games Played
+				td #{stats.doublesGamesPlayed}
+			tr
+				td Double Games Won
+				td #{stats.doublesGamesWon}

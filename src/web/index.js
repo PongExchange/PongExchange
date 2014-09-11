@@ -113,7 +113,6 @@ co(function * ()
 		app.get('/', Controllers.Home.indexGET);
 		
 		app.get('/players', Controllers.Players.indexGET);
-		app.get('/players/:id/:slug', Controllers.Players.profileGET);
 
 		app.get('/rules', Controllers.Rules.indexGET);
 		
@@ -124,7 +123,6 @@ co(function * ()
 		
 		app.all('*', Controllers.Auth.requireSession);
 		
-		
 		// TODO: make create point to new and alter the above to be .all('/games/new')
 		app.get('/games/new', Controllers.Games.newGET);
 		app.post('/games/new', Controllers.Games.newPOST);
@@ -132,6 +130,10 @@ co(function * ()
 
 		app.get('/leaderboard', Controllers.Leaderboard.indexGET);
 		app.get('/leaderboard/overall', Controllers.Leaderboard.overallGET);
+	
+		app.get('/players/:id/edit', Controllers.Players.editGET);
+		app.get('/players/:id/:slug', Controllers.Players.profileGET);
+		app.post('/players/:id/update', Controllers.Players.updatePOST);
 	}
 	
 	function * setupServer (options)

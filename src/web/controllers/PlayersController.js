@@ -22,6 +22,32 @@ PlayersController.profileGET = function*()
 {
   var player = yield Player.getById(this.player.id);
   var stats = yield PlayerStats.getForPlayerId(this.player.id);
-
+console.log({ player: player, stats: stats });
   yield this.render('players/profile', { player: player, stats: stats });
 };
+
+PlayersController.editGET = function*()
+{
+  var player = yield Player.getById(this.player.id);
+  var stats = yield PlayerStats.getForPlayerId(this.player.id);
+
+  yield this.render('players/edit', { player: player, stats: stats });
+};
+
+PlayersController.updatePOST = function*()
+{
+  var response = this.request.body.fields;
+
+  var player = yield Player.getById(this.player.id);
+  player.name = response.player.name || player.name;
+  player.email = response.player.email || player.email;
+
+  if (yield player.save()){
+    this.redirect('/');
+  } else {
+    console.log('This cannot be saved.');
+  }
+  
+};
+
+
