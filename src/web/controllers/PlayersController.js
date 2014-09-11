@@ -41,9 +41,10 @@ PlayersController.updatePOST = function*()
   var player = yield Player.getById(this.player.id);
   player.name = response.player.name || player.name;
   player.email = response.player.email || player.email;
+  player.bio = response.player.bio || player.bio;
 
   if (yield player.save()){
-    this.redirect('/');
+    this.redirect(player.profileUrl);
   } else {
     console.log('This cannot be saved.');
   }

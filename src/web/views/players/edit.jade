@@ -23,4 +23,9 @@ block Content
 						input(id='email' type='text', name='player[email]', value='#{player.email}', class='edit-input edit-email')
 				tr
 					td 
+						label(for='bio') Bio
+					td 
+						textarea(id="bio", name='player[bio]', class='edit-input') #{player.bio}
+				tr
+					td 
 						input(type='submit' value='submit')
