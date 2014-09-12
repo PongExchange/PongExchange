@@ -23,40 +23,43 @@ block Content
 			p #{player.bio}
 
 		table.table.stats-table
-			tr
-				th Stats
-				th
-			tr
-				td Single Games Played
-				td #{stats.singlesGamesPlayed}
-			tr
-				td Single Games Won
-				td #{stats.singlesGamesWon}
-			tr
-				td Double Games Played
-				td #{stats.doublesGamesPlayed}
-			tr
-				td Double Games Won
-				td #{stats.doublesGamesWon}
+			thead
+				tr
+					th(colspan=2) Stats
+			tbody
+				tr
+					td Total Games Played
+					td #{stats.singlesGamesPlayed + stats.doublesGamesPlayed}
+				tr
+					td Single Games Played
+					td #{stats.singlesGamesPlayed}
+				tr
+					td Single Games Won
+					td #{stats.singlesGamesWon}
+				tr
+					td Double Games Played
+					td #{stats.doublesGamesPlayed}
+				tr
+					td Double Games Won
+					td #{stats.doublesGamesWon}
 
 		hr
 
 		table.table.games-table
-			tr
-				th Games Played
-				th
-				th
-				th
-			tr
-				th Winner
-				th Loser
-				th Score
-				th Date Played
-			each game in games
+			thead 
 				tr
-					td.team 
-						+renderTeam(game.team1)
-					td.team
-						+renderTeam(game.team2)
-					td #{game.team1Score}-#{game.team2Score} 
-					td #{game.playedDateRelativeTime()}
+					th(colspan=4) Games Played
+				tr
+					th Winner
+					th Loser
+					th Score
+					th Date Played
+			tbody
+				each game in games
+					tr
+						td.team 
+							+renderTeam(game.team1)
+						td.team
+							+renderTeam(game.team2)
+						td #{game.team1Score}-#{game.team2Score} 
+						td #{game.playedDateRelativeTime()}
