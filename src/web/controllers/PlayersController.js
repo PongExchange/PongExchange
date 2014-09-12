@@ -23,7 +23,7 @@ PlayersController.profileGET = function*()
 {
   var player = yield Player.getById(this.player.id);
   var stats = yield PlayerStats.getForPlayerId(this.player.id);
-  var games = yield Game.getById(this.player.id);
+  var games = yield Game.getAllGamesForPlayer(this.player.id);
 
   yield this.render('players/profile', { player: player, stats: stats, games: games });
 };

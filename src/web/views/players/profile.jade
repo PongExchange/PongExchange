@@ -3,6 +3,10 @@ extends ../layout
 append Css
 	link(type='text/css', rel='stylesheet', href=less.profile)
 
+mixin renderTeam(team)
+	each player, i in team
+		span.player #{player.name}
+
 block Content
 	div.profile
 		div.heading
@@ -36,7 +40,7 @@ block Content
 				td #{stats.doublesGamesWon}
 
 		hr
-		
+
 		table.table.games-table
 			tr
 				th Games Played
@@ -48,4 +52,11 @@ block Content
 				th Loser
 				th Score
 				th Date Played
-			tr
+			each game in games
+				tr
+					td.team 
+						+renderTeam(game.team1)
+					td.team
+						+renderTeam(game.team2)
+					td #{game.team1Score}-#{game.team2Score} 
+					td #{game.playedDateRelativeTime()}
