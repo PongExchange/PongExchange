@@ -6,7 +6,7 @@ append Js
 	script(src=js.players)
 
 block Content
-	div.profile.edit-profile
+	div.edit-profile
 		h2 #{player.name}
 
 
@@ -35,7 +35,7 @@ block Content
 					td 
 						label(for='bio') Bio
 					td 
-						textarea(id="bio", name='player[bio]', class='edit-input') #{player.bio}
+						textarea(id="bio", name='player[bio]', class='edit-input edit-bio') #{player.bio}
 				tr
 					td 
-						input(type='submit' value='submit')
+						input(id="submit" type='submit' value='Save Profile')
