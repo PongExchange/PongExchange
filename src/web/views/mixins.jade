@@ -1,0 +1,11 @@
+mixin renderPlayer(p)
+	a.player(href='#{p.profileUrl}' title='#{p.name}')
+		img(src='#{p.imageUrl || images.AnonymousPlayer}' title='player profile image')
+		span=p.name
+
+mixin renderTeam(t)
+	div.team
+		each p, i in t
+			if i > 0
+				span.teammate-conjunction and
+			+renderPlayer(p)

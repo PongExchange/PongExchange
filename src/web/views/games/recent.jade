@@ -1,8 +1,8 @@
 extends ../layout
+include ../mixins
 
-mixin renderTeam(team)
-	each player, i in team
-		span.player #{player.name}
+append Css
+	link(type='text/css', rel='stylesheet', href=less.mixins)
 
 block Content
 		h2 Recent Games
@@ -14,9 +14,9 @@ block Content
 				th Date played
 			each game in games
 				tr
-					td.team 
+					td 
 						+renderTeam(game.team1)
-					td.team
+					td
 						+renderTeam(game.team2)
 					td #{game.team1Score}-#{game.team2Score} 
 					td #{game.playedDateRelativeTime()}
