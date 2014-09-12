@@ -2,6 +2,7 @@
 
 var Player = require('models/Player');
 var PlayerStats = require('models/PlayerStats');
+var Game = require('models/Game');
 
 var PlayersController = module.exports;
 
@@ -22,8 +23,9 @@ PlayersController.profileGET = function*()
 {
   var player = yield Player.getById(this.player.id);
   var stats = yield PlayerStats.getForPlayerId(this.player.id);
+  var games = yield Game.getById(this.player.id);
 
-  yield this.render('players/profile', { player: player, stats: stats });
+  yield this.render('players/profile', { player: player, stats: stats, games: games });
 };
 
 PlayersController.editGET = function*()
@@ -42,6 +44,7 @@ PlayersController.updatePOST = function*()
   player.name = response.player.name || player.name;
   player.email = response.player.email || player.email;
   player.bio = response.player.bio || player.bio;
+  player.imageUrl = response.player.imageUrl || player.imageUrl;
 
   if (yield player.save()){
     this.redirect(player.profileUrl);

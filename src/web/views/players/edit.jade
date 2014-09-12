@@ -2,20 +2,30 @@ extends ../layout
 
 append Css
 	link(type='text/css', rel='stylesheet', href=less.profile)
+append Js
+	script(src=js.players)
 
 block Content
 	div.profile.edit-profile
-
-		img.large-profile-image(src=player.imageUrl)
 		h2 #{player.name}
 
+
 		form(method='post' action='/players/#{player.id}/update' class='edit-profile-form')
-			table
+			table.edit-table
+				col(style="width: 30%;")
+				col(style="width: 70%;")
 				tr
 					td 
 						label(for='name') Display Name
 					td 
 						input(id='name' type='text', name='player[name]', value='#{player.name}', class='edit-input edit-name')
+				tr
+					td 
+						label(for='image') Profile Image
+					td 
+						input(id='image' type='text', name='player[imageUrl]', value='#{player.imageUrl}', class='edit-input edit-image')
+						input(type='hidden' value='#{player.googleProfile.image.url}')
+						button.default-image Revert to Google's default image.
 				tr
 					td 
 						label(for='email') Email
