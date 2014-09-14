@@ -18,7 +18,7 @@ suite('Game tests', function ()
 		g.team2Score = 11;
 		
 		yield g.save();
-		assert(g.isSaved(), 'should have been saved');
+		assert(g.isSaved, 'should have been saved');
 		
 		// save can swap teams around
 		assert(g.team1Score > g.team2Score, 'team 1 should always win, baby');
@@ -41,7 +41,7 @@ suite('Game tests', function ()
 		g.team2Score = 8;
 
 		yield g.save();
-		assert(g.isSaved(), 'should have been saved');
+		assert(g.isSaved, 'should have been saved');
 
 		var gg = yield Game.getById(g.id);
 		assert.deepEqual(gg, g, 'game 1 should be equal to one loaded from the db');
