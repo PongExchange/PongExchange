@@ -1,3 +1,6 @@
+mixin relativeTime(date)
+	span.relative-time(title='#{date}') #{PongUtils.relativeTime(date)}
+
 mixin renderPlayer(p)
 	a.player(href='#{p.profileUrl}' title='#{p.name}')
 		img(src='#{p.imageUrl || images.AnonymousPlayer}' title='player profile image')

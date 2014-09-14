@@ -182,6 +182,8 @@ co(function * ()
 		// images
 		globals.images = yield getStaticResourceMap(Config.web.static.imagesPath);
 		
+		globals.PongUtils = require('PongUtils');
+		
 		return globals;
 	}
 	

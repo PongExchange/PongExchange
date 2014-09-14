@@ -19,4 +19,5 @@ block Content
 					td
 						+renderTeam(game.team2)
 					td #{game.team1Score}-#{game.team2Score} 
-					td #{game.playedDateRelativeTime()}
+					td
+						+relativeTime(game.played_date)
