@@ -4,18 +4,18 @@ var assert = require('assert');
 var Game = require('../../src/node_modules/models/Game');
 var Match = require('../../src/node_modules/models/Match');
 var Player = require('../../src/node_modules/models/Player');
-var TestHelpers = require('TestHelpers');
+var TestUtils = require('TestUtils.js');
 
 suite('Match tests', function()
 {
 	test('playing a singles match, best out of 3', function*()
 	{
 		var gOptions = {
-			team1: [yield TestHelpers.getPlayer()],
-			team2: [yield TestHelpers.getPlayer()]
+			team1: [yield TestUtils.getPlayer()],
+			team2: [yield TestUtils.getPlayer()]
 		};
 		
-		var g = yield TestHelpers.getGame(gOptions),
+		var g = yield TestUtils.getGame(gOptions),
 			m = yield Match.newMatch();
 		
 		assert(m.id > 0, 'match should have been inserted');
@@ -42,7 +42,7 @@ suite('Match tests', function()
 		var isComplete = yield m.isComplete();
 		assert(isComplete === false, 'match must have a minimum of 2 matches to be complete');
 		
-		g = yield TestHelpers.getGame(gOptions);
+		g = yield TestUtils.getGame(gOptions);
 		yield m.addGame(g);
 
 		gameCount = yield m.getGameCount();
@@ -59,8 +59,8 @@ suite('Match tests', function()
 	{
 		var m = yield Match.newMatch();
 		
-		var game1 = yield TestHelpers.getGame();
-		var game2 = yield TestHelpers.getGame({ game_type_id: Game.types.doubles });
+		var game1 = yield TestUtils.getGame();
+		var game2 = yield TestUtils.getGame({ game_type_id: Game.types.doubles });
 		
 		try
 		{
@@ -73,7 +73,7 @@ suite('Match tests', function()
 			assert.equal(e.message, 'may only add the same type of game to an existing match');
 		}
 		
-		game2 = yield TestHelpers.getGame();
+		game2 = yield TestUtils.getGame();
 		
 		try
 		{

@@ -3,7 +3,7 @@
 var assert = require('assert');
 var Game = require('../../src/node_modules/models/Game');
 var Player = require('../../src/node_modules/models/Player');
-var TestHelpers = require('TestHelpers');
+var TestUtils = require('TestUtils.js');
 
 suite('Player tests', function ()
 {
@@ -54,11 +54,11 @@ suite('Player tests', function ()
 	
 	test('getting players with their stats', function*()
 	{
-		var p1 = yield TestHelpers.getPlayer(),
-			p2 = yield TestHelpers.getPlayer();
+		var p1 = yield TestUtils.getPlayer(),
+			p2 = yield TestUtils.getPlayer();
 		
 		// singles stats first
-		yield TestHelpers.getGame({ team1: [p1], team2: [p2] });
+		yield TestUtils.getGame({ team1: [p1], team2: [p2] });
 		
 		// p1 should have played one game with one win
 		yield p1.loadStats();
