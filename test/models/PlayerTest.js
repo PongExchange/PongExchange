@@ -26,17 +26,6 @@ suite('Player tests', function ()
 		
 	});
 	
-	test('is same team', function*()
-	{
-		var game = yield TestHelpers.getGame();
-		assert(Player.isSameTeam(game.team1, game.team1) === true);
-		assert(Player.isSameTeam(game.team1, game.team2) === false);
-		
-		game = yield TestHelpers.getGame({ game_type_id: Game.types.doubles });
-		assert(Player.isSameTeam(game.team1, game.team1) === true);
-		assert(Player.isSameTeam(game.team1, game.team2) === false);
-	});
-	
 	test('getting a player by id', function* () 
 	{
 		var p = new Player();

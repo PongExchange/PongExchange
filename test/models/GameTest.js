@@ -98,4 +98,56 @@ suite('Game tests', function ()
 		games = yield Game.getRecent(2);
 		assert(games.length === 2, 'should have found 2 games');
 	});
+
+	test('has same teams', function*()
+	{
+		// default getGame() creates new players
+		var game1 = yield TestHelpers.getGame();
+		var game2 = yield TestHelpers.getGame();
+		assert(Game.hasSameTeams(game1, game2) === false);
+
+		// reuse the same players for a singles match
+		var gOptions = {
+			team1: [yield TestHelpers.getPlayer()],
+			team2: [yield TestHelpers.getPlayer()],
+			
+			team1Score: 11,
+			team2Score: 5
+		};
+		game1 = yield TestHelpers.getGame(gOptions);
+		game2 = yield TestHelpers.getGame(gOptions);
+		assert(Game.hasSameTeams(game1, game2) === true);
+		
+	 	// swap who wins
+		gOptions.team2Score = 13;
+		game2 = yield TestHelpers.getGame(gOptions);
+		assert(Game.hasSameTeams(game1, game2) === true);
+		
+		// play some doubles games with the same players
+		gOptions.team2Score = 5;
+		gOptions.game_type_id = Game.types.doubles;
+		gOptions.team1.push(yield TestHelpers.getPlayer());
+		gOptions.team2.push(yield TestHelpers.getPlayer());
+		game1 = yield TestHelpers.getGame(gOptions);
+		game2 = yield TestHelpers.getGame(gOptions);
+		assert(Game.hasSameTeams(game1, game2) === true);
+		
+		// and different players
+		gOptions.team1 = null;
+		gOptions.team2 = null;
+		game1 = yield TestHelpers.getGame(gOptions);
+		game2 = yield TestHelpers.getGame(gOptions);
+		assert(Game.hasSameTeams(game1, game2) === false);
+	});
+	
+	test('is same team', function*()
+	{
+		var game = yield TestHelpers.getGame();
+		assert(Game.isSameTeam(game.team1, game.team1) === true);
+		assert(Game.isSameTeam(game.team1, game.team2) === false);
+
+		game = yield TestHelpers.getGame({ game_type_id: Game.types.doubles });
+		assert(Game.isSameTeam(game.team1, game.team1) === true);
+		assert(Game.isSameTeam(game.team1, game.team2) === false);
+	});
 });

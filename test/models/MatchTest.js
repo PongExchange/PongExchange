@@ -8,7 +8,7 @@ var TestHelpers = require('TestHelpers');
 
 suite('Match tests', function()
 {
-	test('playing a singles match', function*()
+	test('playing a singles match, best out of 3', function*()
 	{
 		var gOptions = {
 			team1: [yield TestHelpers.getPlayer()],
@@ -20,8 +20,14 @@ suite('Match tests', function()
 		
 		assert(m.id > 0, 'match should have been inserted');
 		
+		var gameCount = yield m.getGameCount();
+		assert.equal(gameCount, 0);
+		
 		yield m.addGame(g);
 		assert.equal(g.match_id, m.id, 'game should now have a match id');
+		
+		gameCount = yield m.getGameCount();
+		assert.equal(gameCount, 1);
 		
 		var gLoaded = yield Game.getById(g.id);
 		assert.deepEqual(gLoaded, g, 'persisted game should match its original');
@@ -38,6 +44,9 @@ suite('Match tests', function()
 		
 		g = yield TestHelpers.getGame(gOptions);
 		yield m.addGame(g);
+
+		gameCount = yield m.getGameCount();
+		assert.equal(gameCount, 2);
 		
 		games = yield m.getAllGames();
 		assert(games.length == 2, 'should have two games played now');
@@ -45,4 +54,36 @@ suite('Match tests', function()
 		isComplete = yield m.isComplete();
 		assert(isComplete, 'match should be complete after one team wins two games');
 	});
+	
+	test('addGame validation', function*()
+	{
+		var m = yield Match.newMatch();
+		
+		var game1 = yield TestHelpers.getGame();
+		var game2 = yield TestHelpers.getGame({ game_type_id: Game.types.doubles });
+		
+		try
+		{
+			yield m.addGame(game1);
+			yield m.addGame(game2);
+			assert(false, 'should not be able to add different types of games to same match');
+		}
+		catch (e)
+		{
+			assert.equal(e.message, 'may only add the same type of game to an existing match');
+		}
+		
+		game2 = yield TestHelpers.getGame();
+		
+		try
+		{
+			yield m.addGame(game2);
+			assert(false, 'should not be able to add games with different teams to the same match');
+		}
+		catch (e)
+		{
+			assert.equal(e.message, 'only the same teams may play in the same match');
+		}
+	});
+	
 });
