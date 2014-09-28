@@ -1,8 +1,8 @@
 "use strict";
 
 var assert = require('assert');
-var Player = require('../../src/node_modules/models/Player');
 var Game = require('../../src/node_modules/models/Game');
+var Player = require('../../src/node_modules/models/Player');
 var TestHelpers = require('TestHelpers');
 
 suite('Game tests', function ()
@@ -16,6 +16,8 @@ suite('Game tests', function ()
 		
 		g.team1Score = 7;
 		g.team2Score = 11;
+		
+		g.recorded_by_player_id = g.team1[0].id;
 		
 		yield g.save();
 		assert(g.isSaved, 'should have been saved');
@@ -40,6 +42,8 @@ suite('Game tests', function ()
 		g.team1Score = 11;
 		g.team2Score = 8;
 
+		g.recorded_by_player_id = g.team1[0].id;
+		
 		yield g.save();
 		assert(g.isSaved, 'should have been saved');
 
