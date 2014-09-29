@@ -23,7 +23,16 @@ suite('Player tests', function ()
 		p = yield Player.getById(p.id);
 		assert(p.email === 'jarrod@gmail.com', 'email should have been normalized');
 		assert(p.name === 'jarrod@gmail.com', 'name should be email');
+	});
+	
+	test('updating a player', function*()
+	{
+		var p = yield TestUtils.getPlayer();
+		p.name = 'Billy Breathes';
+		yield p.save();
 		
+		p = yield Player.getById(p.id);
+		assert.equal(p.name, 'Billy Breathes');
 	});
 	
 	test('getting a player by id', function* () 
