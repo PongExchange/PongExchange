@@ -113,9 +113,12 @@ co(function * ()
 		app.get('/', Controllers.Home.indexGET);
 		
 		app.get('/players', Controllers.Players.indexGET);
-
 		app.get('/rules', Controllers.Rules.indexGET);
 		
+		app.get('/games/recent', Controllers.Games.recentGET);
+		app.get('/leaderboard', Controllers.Leaderboard.indexGET);
+		app.get('/leaderboard/overall', Controllers.Leaderboard.overallGET);
+
 		app.post('/auth/google/callback', Controllers.Auth.googleCallbackPOST);
 		app.post('/logout', Controllers.Auth.logoutPOST);
 		
@@ -126,10 +129,6 @@ co(function * ()
 		// TODO: make create point to new and alter the above to be .all('/games/new')
 		app.get('/games/new', Controllers.Games.newGET);
 		app.post('/games/new', Controllers.Games.newPOST);
-		app.get('/games/recent', Controllers.Games.recentGET);
-
-		app.get('/leaderboard', Controllers.Leaderboard.indexGET);
-		app.get('/leaderboard/overall', Controllers.Leaderboard.overallGET);
 	
 		app.get('/players/:id/edit', Controllers.Players.editGET);
 		app.get('/players/:id/:slug', Controllers.Players.profileGET);
