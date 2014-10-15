@@ -8,17 +8,19 @@ append Css
 block Content
 	div.profile
 		div.heading
-			img.large-profile-image(src=player.imageUrl)
+			img.large-profile-image(src=individualPlayer.imageUrl)
 			div.heading-info
-				h2 #{player.name}
-				h5 #{player.email}
-			button.edit-button
-				a(href="/players/#{player.id}/edit") Edit Profile
+				h2 #{individualPlayer.name}
+				h5 #{individualPlayer.email}
+			if player
+				if player.name === individualPlayer.name 
+					button.edit-button
+						a(href="/players/#{player.id}/edit") Edit Profile
 
 		hr 
 
 		div.bio
-			p #{player.bio}
+			p #{individualPlayer.bio}
 
 		table.table.stats-table
 			thead

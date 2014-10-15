@@ -113,6 +113,10 @@ co(function * ()
 		app.get('/', Controllers.Home.indexGET);
 		
 		app.get('/players', Controllers.Players.indexGET);
+
+		app.get('/players/:id/edit', Controllers.Players.editGET);		
+		app.get('/players/:id/:slug', Controllers.Players.profileGET);
+
 		app.get('/rules', Controllers.Rules.indexGET);
 		
 		app.get('/games/recent', Controllers.Games.recentGET);
@@ -130,8 +134,6 @@ co(function * ()
 		app.get('/games/new', Controllers.Games.newGET);
 		app.post('/games/new', Controllers.Games.newPOST);
 	
-		app.get('/players/:id/edit', Controllers.Players.editGET);
-		app.get('/players/:id/:slug', Controllers.Players.profileGET);
 		app.post('/players/:id/update', Controllers.Players.updatePOST);
 	}
 	

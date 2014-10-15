@@ -19,17 +19,31 @@ PlayersController.indexGET = function*()
 	yield this.render('players/index', { players: players });
 };
 
+// PlayersController.profileGET = function*()
+// {
+//   var player = yield Player.getById(this.player.id);
+//   var stats = yield PlayerStats.getForPlayerId(this.player.id);
+//   var games = yield Game.getAllGamesForPlayer(this.player.id);
+
+//   yield this.render('players/profile', { player: player, stats: stats, games: games });
+// };
+
 PlayersController.profileGET = function*()
 {
-  var player = yield Player.getById(this.player.id);
-  var stats = yield PlayerStats.getForPlayerId(this.player.id);
-  var games = yield Game.getAllGamesForPlayer(this.player.id);
+  var url = this.request.url;
+  var playerId = parseInt(url[9]);
+  
+  var player = yield Player.getById(playerId);
+  var stats = yield PlayerStats.getForPlayerId(playerId);
+  var games = yield Game.getAllGamesForPlayer(playerId);
 
-  yield this.render('players/profile', { player: player, stats: stats, games: games });
+  yield this.render('players/profile', { individualPlayer: player, stats: stats, games: games });
 };
+
 
 PlayersController.editGET = function*()
 {
+  console.log("hello!")
   var player = yield Player.getById(this.player.id);
   var stats = yield PlayerStats.getForPlayerId(this.player.id);
 
