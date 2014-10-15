@@ -19,14 +19,6 @@ PlayersController.indexGET = function*()
 	yield this.render('players/index', { players: players });
 };
 
-// PlayersController.profileGET = function*()
-// {
-//   var player = yield Player.getById(this.player.id);
-//   var stats = yield PlayerStats.getForPlayerId(this.player.id);
-//   var games = yield Game.getAllGamesForPlayer(this.player.id);
-
-//   yield this.render('players/profile', { player: player, stats: stats, games: games });
-// };
 
 PlayersController.profileGET = function*()
 {
@@ -43,7 +35,6 @@ PlayersController.profileGET = function*()
 
 PlayersController.editGET = function*()
 {
-  console.log("hello!")
   var player = yield Player.getById(this.player.id);
   var stats = yield PlayerStats.getForPlayerId(this.player.id);
 
