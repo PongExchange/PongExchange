@@ -6,9 +6,10 @@ append Css
 	link(type='text/css', rel='stylesheet', href=less.players)
 
 block Content
-	h2 #{players.length} Players
 	table.table
 		thead
+			tr
+				th(colspan=5).header #{players.length} players 
 			tr
 				th
 				th(colspan=2) Singles
