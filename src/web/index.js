@@ -129,12 +129,15 @@ co(function * ()
 		// --- Routes requiring auth ---
 		
 		app.all('*', Controllers.Auth.requireSession);
-		
-		// TODO: make create point to new and alter the above to be .all('/games/new')
+
+		app.post('/players/:id/update', Controllers.Players.updatePOST);
+
+		// --- Routes requiring Active Player Role ---
+		app.all('*', Controllers.Auth.requireActivePlayer);
+
 		app.get('/games/new', Controllers.Games.newGET);
 		app.post('/games/new', Controllers.Games.newPOST);
-	
-		app.post('/players/:id/update', Controllers.Players.updatePOST);
+
 	}
 	
 	function * setupServer (options)

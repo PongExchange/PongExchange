@@ -90,3 +90,11 @@ AuthController.requireSession = function * (next)
 	else
 		yield next;
 };
+
+AuthController.requireActivePlayer = function * (next)
+{
+	if (this.player.role_id < Player.roles.active)
+		yield this.render('auth/requires-active-player');
+	else
+		yield next;
+};
