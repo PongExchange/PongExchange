@@ -75,4 +75,12 @@ suite('Player tests', function ()
 		assert(p1.stats.singlesGamesPlayed === 1, 'should have played a singles game');
 		assert(p1.stats.singlesGamesWon === 1, 'should have won the first singles game');
 	});
+
+	test('saving player with specific role', function*()
+	{
+		var p1 = yield TestUtils.getPlayer({role_id: Player.roles.active});
+		var pDb = yield Player.getById(p1.id);
+
+		assert.equal(p1.role_id, pDb.role_id);
+	});
 });
