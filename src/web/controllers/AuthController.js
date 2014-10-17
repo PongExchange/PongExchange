@@ -98,3 +98,11 @@ AuthController.requireActivePlayer = function * (next)
 	else
 		yield next;
 };
+
+AuthController.isInvited = function * (next)
+{
+	if (this.player.role_id === Player.roles.invited)
+		this.player.role_id = Player.roles.active;
+		yield this.player.save();
+		yield next;
+};

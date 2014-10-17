@@ -133,6 +133,7 @@ co(function * ()
 		app.post('/players/:id/update', Controllers.Players.updatePOST);
 
 		// --- Routes requiring Active Player Role ---
+		app.all('*', Controllers.Auth.isInvited);
 		app.all('*', Controllers.Auth.requireActivePlayer);
 
 		app.get('/games/new', Controllers.Games.newGET);
