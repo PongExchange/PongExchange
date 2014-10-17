@@ -3,6 +3,7 @@
 var assert = require('assert');
 var Game = require('../../src/node_modules/models/Game');
 var Player = require('../../src/node_modules/models/Player');
+var Index = require('../../src/web/index.js');
 var TestUtils = require('TestUtils.js');
 
 suite('Player tests', function ()
@@ -82,5 +83,27 @@ suite('Player tests', function ()
 		var pDb = yield Player.getById(p1.id);
 
 		assert.equal(p1.role_id, pDb.role_id);
+	});
+
+	//test to see if player is invited the automatically change to active
+	test('changing player from invited to active', function*()
+	{
+		var p1 = yield TestUtils.getPlayer({role_id: Player.roles.invited});
+		if (p1.role_id === Player.roles.invited){
+			p1.role_id = Player.roles.active;
+			yield p1.save();
+		}
+		assert.equal(p1.role_id, 3);
+	});
+
+	//test to see if player is pending they still cannot access game record
+	test('changing player from pending to active', function*()
+	{
+		var p1 = yield TestUtils.getPlayer({role_id: Player.roles.pending});
+		if (p1.role_id === Player.roles.invited){
+			p1.role_id = Player.roles.active;
+			yield p1.save();
+		}
+		assert.equal(p1.role_id, 1);
 	});
 });
