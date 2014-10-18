@@ -3,7 +3,6 @@
 var assert = require('assert');
 var Game = require('../../src/node_modules/models/Game');
 var Player = require('../../src/node_modules/models/Player');
-var Index = require('../../src/web/index.js');
 var TestUtils = require('TestUtils.js');
 
 suite('Player tests', function ()
@@ -77,33 +76,21 @@ suite('Player tests', function ()
 		assert(p1.stats.singlesGamesWon === 1, 'should have won the first singles game');
 	});
 
-	test('saving player with specific role', function*()
+	test('creating/updating player roles', function*()
 	{
-		var p1 = yield TestUtils.getPlayer({role_id: Player.roles.active});
-		var pDb = yield Player.getById(p1.id);
+		// by default, players have a "pending approval" role - let's override that here
+		var p = yield TestUtils.getPlayer({role_id: Player.roles.active});
+		var pDb = yield Player.getById(p.id);
+		
+		// by fetching the player again from the database, we assert that the insertion happened correctly
+		assert.equal(p.role_id, pDb.role_id);
+		
+		// now ensure that player.save correctly updates the database
+		p.role_id = Player.roles.admin;
+		yield p.save();
 
-		assert.equal(p1.role_id, pDb.role_id);
+		pDb = yield Player.getById(p.id);
+		assert.equal(p.role_id, pDb.role_id);
 	});
-
-	//test to see if player is invited the automatically change to active
-	test('changing player from invited to active', function*()
-	{
-		var p1 = yield TestUtils.getPlayer({role_id: Player.roles.invited});
-		if (p1.role_id === Player.roles.invited){
-			p1.role_id = Player.roles.active;
-			yield p1.save();
-		}
-		assert.equal(p1.role_id, 3);
-	});
-
-	//test to see if player is pending they still cannot access game record
-	test('changing player from pending to active', function*()
-	{
-		var p1 = yield TestUtils.getPlayer({role_id: Player.roles.pending});
-		if (p1.role_id === Player.roles.invited){
-			p1.role_id = Player.roles.active;
-			yield p1.save();
-		}
-		assert.equal(p1.role_id, 1);
-	});
+	
 });
