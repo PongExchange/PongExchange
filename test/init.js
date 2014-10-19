@@ -9,7 +9,8 @@ Sql.testingMode = true;
 setup(function * ()
 {
 	
-	yield [runMigrationsOnce(), truncateTables()];
+	yield runMigrationsOnce();
+	yield truncateTables();
 });
 
 //teardown(function * ()
