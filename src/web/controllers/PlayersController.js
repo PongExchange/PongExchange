@@ -23,7 +23,7 @@ PlayersController.indexGET = function*()
 PlayersController.profileGET = function*()
 {
   var url = this.request.url;
-  var playerId = parseInt(url[9]);
+  var playerId = parseInt(url.match(/\d+/)[0]);
   
   var player = yield Player.getById(playerId);
   var stats = yield PlayerStats.getForPlayerId(playerId);
