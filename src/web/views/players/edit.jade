@@ -24,9 +24,6 @@ block Content
 						label(for='image') Profile Image
 					td 
 						input(id='image' type='text', name='player[imageUrl]', value='#{player.imageUrl}', class='edit-input edit-image')
-						input(type='hidden' value='#{player.googleProfile.image.url}')
-						img(src="#{player.googleProfile.image.url}" class="small-image")
-						button.button.default-image Use Google's default image.
 				tr
 					td 
 						label(for='email') Email
