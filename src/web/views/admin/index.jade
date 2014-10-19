@@ -1,0 +1,12 @@
+extends ../layout
+include ../mixins
+
+append Css
+	link(type='text/css', rel='stylesheet', href=less.mixins)
+
+block Header
+		h1 Admin
+
+block Content
+	a(href="/admin/affiliation") Affiliations
+

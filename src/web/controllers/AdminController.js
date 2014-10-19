@@ -5,8 +5,14 @@ var Affiliation = require('models/Affiliation');
 var AdminController = module.exports;
 
 /*
-    /affiliation - list, add, edit, delete affiliations
+    /admin
+    /admin/affiliation - list, add, edit, delete affiliations
 */
+
+AdminController.indexGET = function*()
+{
+	yield this.render('admin/index');
+}
 
 AdminController.affiliationsIndexGET = function*()
 {

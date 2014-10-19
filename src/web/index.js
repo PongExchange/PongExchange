@@ -29,6 +29,7 @@ co(function * ()
 
 	// setup controllers
 	var Controllers = {};
+	Controllers.Admin = require('./controllers/AdminController');
 	Controllers.Auth = require('./controllers/AuthController');
 	Controllers.Home = require('./controllers/HomeController');
 	Controllers.Games = require('./controllers/GamesController');
@@ -112,6 +113,8 @@ co(function * ()
 		app.all('*', Controllers.Auth.loadSession);
 		app.get('/', Controllers.Home.indexGET);
 		
+		app.get('/admin', Controllers.Admin.indexGET);
+		app.get('/admin/affiliations', Controllers.Admin.affiliationsIndexGET);
 		app.get('/players', Controllers.Players.indexGET);
 
 		app.get('/players/:id/edit', Controllers.Players.editGET);		
