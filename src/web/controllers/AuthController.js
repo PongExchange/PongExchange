@@ -93,7 +93,7 @@ AuthController.requireSession = function * (next)
 
 AuthController.requireActivePlayer = function * (next)
 {
-	if (this.player.role_id < Player.roles.active)
+	if (this.player.player_type_id < Player.types.active)
 		yield this.render('auth/requires-active-player');
 	else
 		yield next;
@@ -101,8 +101,8 @@ AuthController.requireActivePlayer = function * (next)
 
 AuthController.isInvited = function * (next)
 {
-	if (this.player.role_id === Player.roles.invited)
-		this.player.role_id = Player.roles.active;
+	if (this.player.player_type_id === Player.types.invited)
+		this.player.player_type_id = Player.types.active;
 		yield this.player.save();
 		yield next;
 };

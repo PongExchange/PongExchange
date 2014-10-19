@@ -79,18 +79,18 @@ suite('Player tests', function ()
 	test('creating/updating player roles', function*()
 	{
 		// by default, players have a "pending approval" role - let's override that here
-		var p = yield TestUtils.getPlayer({role_id: Player.roles.active});
+		var p = yield TestUtils.getPlayer({player_type_id: Player.types.active});
 		var pDb = yield Player.getById(p.id);
 		
 		// by fetching the player again from the database, we assert that the insertion happened correctly
-		assert.equal(p.role_id, pDb.role_id);
+		assert.equal(p.player_type_id, pDb.player_type_id);
 		
 		// now ensure that player.save correctly updates the database
-		p.role_id = Player.roles.admin;
+		p.player_type_id = Player.types.admin;
 		yield p.save();
 
 		pDb = yield Player.getById(p.id);
-		assert.equal(p.role_id, pDb.role_id);
+		assert.equal(p.player_type_id, pDb.player_type_id);
 	});
 	
 });
