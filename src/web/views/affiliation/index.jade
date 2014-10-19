@@ -1,0 +1,23 @@
+extends ../layout
+include ../mixins
+
+append Css
+	link(type='text/css', rel='stylesheet', href=less.mixins)
+
+block Header
+		h1 Affiliations
+
+block Content
+	table.table
+		tr
+			th(colspan=3).header Affiliations
+		tr
+			th (delete)
+			th (edit)
+			th Name
+		each affiliation in affiliations
+			tr
+				td a(href="/admin/affiliation/delete/#{affiliation.id}") Delete
+				td a(href="/admin/affiliation/edit/#{affiliation.id}") Edit
+				td #{affiliation.name}
+		
