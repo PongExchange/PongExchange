@@ -5,6 +5,7 @@ var Affiliation = require('models/Affiliation');
 var AdminController = module.exports;
 
 /*
+<<<<<<< HEAD
     /admin
     /admin/affiliation - list, add, edit, delete affiliations
 */
