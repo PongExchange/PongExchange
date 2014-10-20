@@ -6,7 +6,7 @@ var AdminController = module.exports;
 
 /*
     /admin
-    /admin/affiliation - list, add, edit, delete affiliations
+    /admin/affiliations - list, add, edit, delete affiliations
 */
 
 AdminController.indexGET = function*()
@@ -23,6 +23,26 @@ AdminController.affiliationsIndexGET = function*()
     affiliations.sort(function (p1, p2) { return p1.name.localeCompare(p2.name); });
     
     yield this.render('admin/affiliations/index', { affiliations: affiliations });
+};
+
+AdminController.affiliationsNewPOST = function*()
+{
+    var response = this.request.body.fields;
+    
+    var a = new Affiliation();
+    a.name = response.new_affiliation;
+    
+    try
+    {
+      yield a.save();
+    }
+    catch (e)
+    {
+      // TODO: need to return the error message
+    }
+    
+    this.redirect('/admin/affiliations');
+    
 };
 
 AdminController.affiliationsEditGET = function*()

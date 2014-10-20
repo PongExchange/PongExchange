@@ -115,6 +115,7 @@ co(function * ()
 		
 		app.get('/admin', Controllers.Admin.indexGET);
 		app.get('/admin/affiliations', Controllers.Admin.affiliationsIndexGET); 
+		app.post('/admin/affiliations/new', Controllers.Admin.affiliationsNewPOST);
 		app.get('/players', Controllers.Players.indexGET);
 
 		app.get('/players/:id/edit', Controllers.Players.editGET);		

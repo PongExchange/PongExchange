@@ -2,11 +2,9 @@ extends ../layout
 include ../mixins
 
 append Css
-	link(type='text/css', rel='stylesheet', href=less.mixins)
-
-block Header
-		h1 Admin
+  link(type='text/css', rel='stylesheet', href=less.mixins)
 
 block Content
-	a(href="/admin/affiliations") Affiliations
-
+  h1 Admin
+  a(href="/admin/affiliations") Affiliations
+  
