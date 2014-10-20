@@ -53,7 +53,7 @@ AdminController.affiliationsEditGET = function*()
 
 };
 
-AdminController.affiliationsUpdatePUT = function*()
+AdminController.affiliationsEditPOST = function*()
 {
   var response = this.request.body.fields;
 
@@ -71,14 +71,19 @@ AdminController.affiliationsUpdatePUT = function*()
 
 AdminController.affiliationsDELETE = function*()
 {
-  var response = this.request.body.fields;
+  var url = this.request.url;
+	var affiliationId = parseInt(url.match(/\d+/)[0]);
+	// console.log("affiliation id:", affiliationId);
 
-  var affiliation = yield Affiliation.getById(this.affiliation.id);
+  var affiliation = yield Affiliation.getById(affiliationId);
   
   if (yield affiliation.delete()){
-    this.redirect(affiliation.affiliationUrl);
+  	// console.log("Deleted: ", affiliation.name, affiliation.id);
+    this.redirect("/admin/affiliations");
   } else {
     console.log('This cannot be deleted.');
   }
+	
+	
   
 };

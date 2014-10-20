@@ -11,7 +11,7 @@ head
 block Content
 	table.table
 		tr
-			th.header Affiliations
+			th(colspan=3).header Affiliations
 		tr
 			th Name
 		each affiliation in affiliations
@@ -19,9 +19,9 @@ block Content
 				td
 					<span>#{affiliation.name}</span> 
 				td
-					a(href="/admin/affiliations/delete/#{affiliation.id}") Delete
+					a(href="/admin/affiliations/#{affiliation.id}/delete") Delete
 				td
-					a(href="/admin/affiliations/edit/#{affiliation.id}") Edit
+					a(href="/admin/affiliations/#{affiliation.id}/edit") Edit
 					
 		
 	form(method='post' action='/admin/affiliations/new')

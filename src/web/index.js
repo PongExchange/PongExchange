@@ -116,6 +116,9 @@ co(function * ()
 		app.get('/admin', Controllers.Admin.indexGET);
 		app.get('/admin/affiliations', Controllers.Admin.affiliationsIndexGET); 
 		app.post('/admin/affiliations/new', Controllers.Admin.affiliationsNewPOST);
+		app.get('/admin/affiliations/:id/delete', Controllers.Admin.affiliationsDELETE);
+		app.get('/admin/affiliations/:id/edit', Controllers.Admin.affiliationsEditGET);
+		app.post('/admin/affiliations/update', Controllers.Admin.affiliationsEditPOST);
 		app.get('/players', Controllers.Players.indexGET);
 
 		app.get('/players/:id/edit', Controllers.Players.editGET);		
