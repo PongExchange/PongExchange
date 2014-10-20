@@ -114,7 +114,7 @@ co(function * ()
 		app.get('/', Controllers.Home.indexGET);
 		
 		app.get('/admin', Controllers.Admin.indexGET);
-		app.get('/admin/affiliations', Controllers.Admin.affiliationsIndexGET);
+		app.get('/admin/affiliations', Controllers.Admin.affiliationsIndexGET); 
 		app.get('/players', Controllers.Players.indexGET);
 
 		app.get('/players/:id/edit', Controllers.Players.editGET);		

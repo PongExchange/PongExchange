@@ -22,14 +22,14 @@ AdminController.affiliationsIndexGET = function*()
     // sort by name asc
     affiliations.sort(function (p1, p2) { return p1.name.localeCompare(p2.name); });
     
-    yield this.render('affiliations/index', { affiliations: affiliations });
+    yield this.render('admin/affiliations/index', { affiliations: affiliations });
 };
 
 AdminController.affiliationsEditGET = function*()
 {
   var affiliation = yield Affiliation.getById(this.affiliation.id);
   
-  yield this.render('affiliations/edit', { affiliation: affiliation });
+  yield this.render('admin/affiliations/edit', { affiliation: affiliation });
 
 };
 

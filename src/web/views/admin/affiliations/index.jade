@@ -1,0 +1,26 @@
+extends ../../layout
+include ../../mixins
+
+append Css
+	link(type='text/css', rel='stylesheet', href=less.mixins)
+
+block Header
+		h1 Affiliations
+
+block Content
+	table.table
+		tr
+			th.header Affiliations
+		tr
+			th Name
+		each affiliation in affiliations
+			tr
+				td a(href="/admin/affiliations/delete/#{affiliation.id}") Delete
+					a(href="/admin/affiliations/edit/#{affiliation.id}") Edit
+					#{affiliation.name}
+		tr
+				td
+					form(method='post' action='/admin/affiliations/new' class='new-games-form')
+						input(type='text', name='new_affiliation', placeholder='affiliation', class='form-control score')
+						input(type='submit', class='btn btn-default submit', value="Add Affiliation")
+			
