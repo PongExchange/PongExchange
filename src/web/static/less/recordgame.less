@@ -1,42 +1,103 @@
-.new-game
-{
-	width: 50%;
-	margin: auto;
-	border: 1px solid #ddd;
-}
-
 .new-games-form
 {
-	max-width: 400px;
+	max-width: 60%;
 	margin: auto;
-	padding-bottom: 16px;
+
+  > .title
+	{
+		width: 100%;
+		margin: auto;
+		text-align: center;
+	}
+
+	> #recordteams
+	{
+		width: 100%;
+		margin: 10px auto;
+		background-color: #428bca;
+	}
+
+	> #recordscores
+	{
+		width: 100%;
+		margin: auto;
+		color: white;
+		background-color: #333;	
+	}
+
+	>.add-game-button
+	{
+		background-color: #f8f8f8;
+		color: #000;
+		border: 1px solid #000 !important;
+		margin: 10px;
+		float: right;
+		padding: .3em .6em;
+		box-shadow: 0 2px 1px rgba(0,0,0,0.3),0 1px 0 rgba(255,255,255,0.4) inset;
+	}
+
+	>.add-game-button:hover 
+	{
+		background-color: #000;
+		color: white;
+		border: 1px solid white;
+	}
+
+	>.save-button
+	{
+		padding: .3em .6em;
+		box-shadow: 0 2px 1px rgba(0,0,0,0.3),0 1px 0 rgba(255,255,255,0.4) inset;
+		background-color: #f8f8f8;
+		border: 1px solid #428bca;
+		color: #428bca;
+		margin: 10px;
+		float: right;
+	}
+
+	>.save-button:hover
+	{
+		background-color: #428bca;
+		border: 1px solid #000;
+		color: #f8f8f8;	
+	}
 }
 
-.score 
+
+th, tr 
 {
-	width: 20%;
-	border-radius: 4px;
+	text-align: center;
 }
 
-.submit
+td, th
 {
-	padding: .3em .6em;
-	box-shadow: 0 2px 1px rgba(0,0,0,0.3),0 1px 0 rgba(255,255,255,0.4) inset;
-	background-color: #333;
-	color: #fff;
-	border: 1px solid #000 !important;
-	border-radius: 3px;
+	padding: 5px;
+	margin: 10px;
+}
+
+th
+{
+	color: white;
+}
+
+td 
+{
+	text-align: left;
+}
+
+.chosen-container .chosen-container-multi
+{
+	width: 100% !important;
 }
 
 .chosen-container-multi .chosen-choices 
 {
-	border-radius: 4px;
+	width: 100% !important;
 
 	> li.search-field input[type="text"]
 	{
+		width: 100% !important;
 		height: 30px !important;
-		border-radius: 4px;
-		padding: 6px 12px !important;
+		padding: 10px !important;
 	}
 
 	> li.search-choice
@@ -46,3 +107,4 @@
 	}
 	
 }
+

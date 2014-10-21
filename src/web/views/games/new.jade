@@ -9,29 +9,30 @@ block append Js
 block Content
 	div.new-game
 		form(method='post' action='/games/new' class='new-games-form')
-				h4 record a new game
+			h4.title Record a new Match 
+			table#recordteams 
+				tr
+					th(style="width: 40%;") team 1
+					td(style="width: 60%;") 
+						select(name="team1[players][]", data-placeholder="player(s)",multiple class="chosen-select select-team-1", style="width:100%;", tabindex="1")
+							for person in players
+								option(value="#{person.id}") #{person.name}
+				tr
+					th(style="width: 40%;") team 2 	
+					td(style="width: 60%;") 
+						select(name="team2[players][]", data-placeholder="player(s)",multiple class="chosen-select select-team-2", style="width:100%;", tabindex="1")
+							for person in players
+								option(value="#{person.id}") #{person.name}
+			
+			table#recordscores
+				tr
+					th(style="width: 40%;") game 1  
+					td(style="width: 30%;") 
+						input(type='text', name='team1[score][]', placeholder='score', class='form-control score')
+					td(style="width: 30%;") 
+						input(type='text', name='team2[score][]', placeholder='score', class='form-control score')
 
-				br
+			input(type='submit', id='save-game', class='btn btn-default save-button', value="Save Match")
+			input(type='button', id='add-game', class='btn btn-default add-game-button', value="Add Another Game to Match")
 
-				h5 team 1
-				div.form-group
-					select(name="team1[players][]", data-placeholder="player(s)",multiple class="chosen-select select-team-1", style="width:300px;", tabindex="1")
-						for person in players
-							option(value="#{person.id}") #{person.name}
-				div.form-group
-						input(type='text', name='team1[score]', placeholder='score', class='form-control score')
-				
-				br
-
-				h5 team 2
-				div.form-group
-					select(name="team2[players][]", data-placeholder="player(s)",multiple class="chosen-select select-team-2", style="width:300px;", tabindex="1")
-						for person in players
-							option(value="#{person.id}") #{person.name}
-				
-				div.form-group
-						input(type='text', name='team2[score]', placeholder='score', class='form-control score')
-				
-				br
-				
-				input(type='submit', class='btn btn-default submit', value="Add Game")
+			
