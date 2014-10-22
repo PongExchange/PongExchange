@@ -4,27 +4,32 @@ include ../../mixins
 append Css
 	link(type='text/css', rel='stylesheet', href=less.mixins)
 
-head
-	style(type='text/css').
-		
+append Css
+	link(type='text/css', rel='stylesheet', href="/static/css/bootstrap-editable.css")
+append Js
+	script(src="/static/js/bootstrap-editable.js")
+
+append Js
+	script(type='text/javascript')
+		$(document).ready(function() {
+		$.fn.editable.defaults.mode = 'inline';
+		$('.affiliation').editable();
+		});
+
 
 block Content
 	table.table
 		tr
-			th(colspan=3).header Affiliations
-		tr
-			th Name
+			th(colspan=2).header Affiliations
 		each affiliation in affiliations
 			tr
 				td
-					<span>#{affiliation.name}</span> 
-				td
-					a(href="/admin/affiliations/#{affiliation.id}/delete") Delete
-				td
-					a(href="/admin/affiliations/#{affiliation.id}/edit") Edit
-					
+					a(href='#', class='affiliation', data-type='text', data-pk='#{affiliation.id}', data-url='/admin/affiliations/update', data-title='Affiliation') #{affiliation.name}
+				td(align='right')
+					a(href="/admin/affiliations/#{affiliation.id}/delete", class="btn btn-danger") Delete
+
 		
-	form(method='post' action='/admin/affiliations/new')
-		input(type='text', name='new_affiliation', placeholder='affiliation', class='form-control score')
-		input(type='submit', class='btn btn-default submit', value="Add Affiliation")
+	form(method='post' action='/admin/affiliations/new', class='form-inline editableform')
+		input(type='text', name='new_affiliation', placeholder='New affiliation', class='form-control score' autofocus)
+		input(type='submit', class='btn btn-action submit', value="Add")
 			

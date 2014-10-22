@@ -57,12 +57,16 @@ AdminController.affiliationsEditPOST = function*()
 {
   var response = this.request.body.fields;
 
-  var affiliation = yield Affiliation.getById(this.affiliation.id);
+  var affiliation = yield Affiliation.getById(parseInt(response.pk));
   
-  affiliation.name = response.affiliation.name || affiliation.name;
+  console.log(response.pk, response.value, affiliation);
+  
+  
+  affiliation.name = response.value || affiliation.name;
 
   if (yield affiliation.save()){
-    this.redirect(affiliation.affiliationUrl);
+  	this.status = 200; // notify x-editable library change took place 
+    // this.redirect(affiliation.affiliationUrl);
   } else {
     console.log('This cannot be saved.');
   }
