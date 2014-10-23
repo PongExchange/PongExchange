@@ -31,26 +31,27 @@ AdminController.affiliationsNewPOST = function*()
     
     var a = new Affiliation();
     a.name = response.new_affiliation;
-    
-    try
-    {
-      yield a.save();
-    }
-    catch (e)
-    {
-      // TODO: need to return the error message
-    }
-    
-    this.redirect('/admin/affiliations');
-    
-};
-
-AdminController.affiliationsEditGET = function*()
-{
-  var affiliation = yield Affiliation.getById(this.affiliation.id);
-  
-  yield this.render('admin/affiliations/edit', { affiliation: affiliation });
-
+		
+		var dup = yield Affiliation.checkDup(a.name);
+		
+		if (dup === false)
+	  {
+	    try
+	    {
+	      yield a.save();
+	    }
+	    catch (e)
+	    {
+	      // TODO: need to return the error message
+	    }
+	    
+	    this.redirect('/admin/affiliations');
+		}
+		else {
+			console.log('dup!'); 
+			// not sure how to notify user of duplicate (currently displays no message)
+			this.redirect('/admin/affiliations');
+		}
 };
 
 AdminController.affiliationsEditPOST = function*()
@@ -61,16 +62,24 @@ AdminController.affiliationsEditPOST = function*()
   
   console.log(response.pk, response.value, affiliation);
   
-  
   affiliation.name = response.value || affiliation.name;
 
-  if (yield affiliation.save()){
-  	this.status = 200; // notify x-editable library change took place 
-    // this.redirect(affiliation.affiliationUrl);
-  } else {
-    console.log('This cannot be saved.');
-  }
-  
+	var dup = yield Affiliation.checkDup(affiliation.name);
+	
+	if (dup === false)
+	{
+	  if (yield affiliation.save()){
+	  	this.status = 200; // notify x-editable library change took place 
+	    // this.redirect(affiliation.affiliationUrl);
+	  } else {
+	    console.log('This cannot be saved.');
+	  }
+	}
+	else
+	{
+		this.status = 400; // notify x-editable library of duplicate
+		this.response.body = "Duplicate!";
+	}
 };
 
 AdminController.affiliationsDELETE = function*()
@@ -87,7 +96,4 @@ AdminController.affiliationsDELETE = function*()
   } else {
     console.log('This cannot be deleted.');
   }
-	
-	
-  
 };
